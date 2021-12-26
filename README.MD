@@ -1,1 +1,5 @@
-<img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600">
+
+<center>
+<h1>Example</h1>
+<img src="ScreenImage/Animation.gif">
+</center>
