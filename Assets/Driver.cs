@@ -6,7 +6,12 @@ public class Driver : MonoBehaviour
 {
     [SerializeField] int steerSpeed = 300;
     [SerializeField] int moveSpeed = 20;
-    // [SerializeField] int boostSpeed = 30;
+
+    bool isFullPlaceBlue;
+    bool isFullPlaceBlack;
+
+
+
 
 
     void Update()
@@ -15,6 +20,8 @@ public class Driver : MonoBehaviour
         float moveAmout = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
         transform.Rotate(0, 0, -steerAmout);
         transform.Translate(0, moveAmout, 0);
+        isFullPlaceBlue = Delivery.isFullPlaceBlue;
+        isFullPlaceBlack = Delivery.isFullPlaceBlack;
 
     }
 
@@ -36,11 +43,40 @@ public class Driver : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "customerBlack" || other.tag == "customerBlue")
+        CheckPlaceBlueFull();
+        CheckPlaceBlackFull();
+        // if (other.tag == "customerBlack" || other.tag == "customerBlue")
+        // {
+        //     moveSpeed = 20;
+        // }
+    }
+
+    void CheckPlaceBlueFull()
+    {
+        if (isFullPlaceBlue)
+        {
+            moveSpeed = 10;
+
+        }
+        else
         {
             moveSpeed = 20;
         }
+
+
     }
+    void CheckPlaceBlackFull()
+    {
+        if (isFullPlaceBlack)
+        {
+            moveSpeed = 10;
+
+        }
+        else
+        {
+            moveSpeed = 20;
+        }
 
 
+    }
 }

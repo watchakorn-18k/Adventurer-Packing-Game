@@ -13,9 +13,9 @@ public class Delivery : MonoBehaviour
     int MaxPackageBlack = 5;
     bool hasPackage = false;
     bool isDelivering = false;
-    bool isFullPlaceBlue;
-    bool isFullPlaceBlack;
-    bool isFullPlaceAll;
+    public static bool isFullPlaceBlue;
+    public static bool isFullPlaceBlack;
+    public bool isFullPlaceAll;
     int AmoutOfPackage = 0;
 
     int AmoutOfPlaceBlue = 0;
@@ -83,6 +83,7 @@ public class Delivery : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.tag == "customerBlue" && hasPackage && AmoutOfPlaceBlue <= MaxPackageBlue - 1)
         {
             ColorOfPlace = "Blue";
@@ -154,8 +155,8 @@ public class Delivery : MonoBehaviour
             // เช็คถ้าของถูกทำลายแล้ว
             if (isDelivering && PackageOnCar == null)
             {
-                AmoutOfPlaceBlue += 5;
-                AmoutOfPackage += 5;
+                AmoutOfPlaceBlue += 1;
+                AmoutOfPackage += 1;
 
                 TxtReqBlue.text = $"{+AmoutOfPlaceBlue}/{MaxPackageBlue}";
                 AmoutBlue.text = AmoutOfPlaceBlue.ToString();
@@ -182,8 +183,8 @@ public class Delivery : MonoBehaviour
             // เช็คถ้าของถูกทำลายแล้ว
             if (isDelivering && PackageOnCar == null)
             {
-                AmoutOfPlaceBlack += 5;
-                AmoutOfPackage += 5;
+                AmoutOfPlaceBlack += 1;
+                AmoutOfPackage += 1;
                 TxtReqBlack.text = $"{+AmoutOfPlaceBlack}/{MaxPackageBlack}";
                 AmoutBlack.text = AmoutOfPlaceBlack.ToString();
                 ScorePackage.text = AmoutOfPackage.ToString();
