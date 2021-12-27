@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
+    public AudioSource SoundClickPlay;
 
     // Update is called once per frame
     void Update()
@@ -26,36 +27,73 @@ public class PauseMenu : MonoBehaviour
 
 
     }
+    public void SoundClick()
+    {
+        SoundClickPlay.Play();
+    }
 
     public void Resume()
     {
+
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+
+
     }
+
 
     void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+
     }
 
     public void Restart()
     {
-        Application.LoadLevel(Application.loadedLevel);
+        StartCoroutine(WaitSoundClickToRestart());
+    }
+    IEnumerator WaitSoundClickToRestart()
+    {
+        SoundClickPlay.Play();
         Time.timeScale = 1f;
+        yield return new WaitForSeconds(0.4179592f);
+        Application.LoadLevel(Application.loadedLevel);
+
+        //do something
     }
 
     public void LoadMenu()
     {
-        SceneManager.LoadScene("Menu");
+
         Time.timeScale = 1f;
+        StartCoroutine(WaitSoundClickToLoadMenu());
     }
+    IEnumerator WaitSoundClickToLoadMenu()
+    {
+        SoundClickPlay.Play();
+        yield return new WaitForSeconds(0.4179592f);
+        Delivery.isFullPlaceBlue = false;
+        Delivery.isFullPlaceBlack = false;
+        SceneManager.LoadScene("Menu");
+
+        //do something
+    }
+
 
     public void QuitGame()
     {
+        StartCoroutine(WaitSoundClickToQuit());
+    }
+    IEnumerator WaitSoundClickToQuit()
+    {
+        SoundClickPlay.Play();
+        yield return new WaitForSeconds(0.4179592f);
         Application.Quit();
+
+        //do something
     }
 
 }

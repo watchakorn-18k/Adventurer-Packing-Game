@@ -5,14 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    public AudioSource SoundClickPlay;
     public void PlayGame()
     {
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
     }
 
+    public void PlaySoundClick()
+    {
+        SoundClickPlay.Play();
+    }
     public void QuitGame()
     {
-        Debug.Log("Quit");
+        StartCoroutine(WaitSoundClickToQuit());
+
+    }
+    IEnumerator WaitSoundClickToQuit()
+    {
+        SoundClickPlay.Play();
+        yield return new WaitForSeconds(0.4179592f);
         Application.Quit();
+        //do something
     }
 }

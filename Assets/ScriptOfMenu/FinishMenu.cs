@@ -5,19 +5,22 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FinishMenu : MonoBehaviour
+
 {
-    public void Restart()
-    {
-        Application.LoadLevel(Application.loadedLevel);
-        Time.timeScale = 1f;
-    }
+    public AudioSource SoundClickPlay;
+
     public void LoadMenu()
     {
-        SceneManager.LoadScene("Menu");
         Time.timeScale = 1f;
+        SoundClickPlay.Play();
+        Delivery.isFullPlaceBlue = false;
+        Delivery.isFullPlaceBlack = false;
+        SceneManager.LoadScene("Menu");
+
     }
     public void QuitGame()
     {
+        SoundClickPlay.Play();
         Application.Quit();
     }
 

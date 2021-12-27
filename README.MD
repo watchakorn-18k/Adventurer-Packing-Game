@@ -1,5 +1,6 @@
 
-<h1 align="center">Example</h1>
+<h1 align="center">
+Adventurer-Packing-Game</h1>
 <p align="center"><img src="ScreenImage/Animation.gif">
 </p>
 
