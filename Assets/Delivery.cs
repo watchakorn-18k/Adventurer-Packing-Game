@@ -17,8 +17,8 @@ public class Delivery : MonoBehaviour
     public bool isFullPlaceAll;
 
 
-    public int MaxPackageBlue = 5;
-    public int MaxPackageBlack = 5;
+    public int MaxPackageBlue; //Set value variable at Gameobject Tooy
+    public int MaxPackageBlack; //Set value variable at Gameobject Tooy
     public AudioSource SoundMain;
     public AudioSource SoundPackage;
 
@@ -68,6 +68,8 @@ public class Delivery : MonoBehaviour
         AmoutBlack = GameObject.Find("AmoutBlack").GetComponent<Text>();
         TxtReqBlue = GameObject.Find("FloatingTextBlue").GetComponent<TextMesh>();
         TxtReqBlack = GameObject.Find("FloatingTextBlack").GetComponent<TextMesh>();
+        TxtReqBlue.text = $"{+AmoutOfPlaceBlue}/{MaxPackageBlue}";
+        TxtReqBlack.text = $"{+AmoutOfPlaceBlack}/{MaxPackageBlack}";
         ScorePackage.text = AmoutOfPackage.ToString();
 
 

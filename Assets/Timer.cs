@@ -11,6 +11,7 @@ public class Timer : MonoBehaviour
     TimeSpan timeSpan;
     [SerializeField] GameObject gameOver;
 
+
     Text ScorePackage;
 
     void Start()
@@ -54,6 +55,7 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
+
 
 
 
