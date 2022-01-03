@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: c6b400d199608f542bb4c11e143493fa
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Tlwg Typo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 31dfcbf58a8a5c04e91e7c1a26f633bb, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

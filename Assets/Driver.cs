@@ -11,6 +11,8 @@ public class Driver : MonoBehaviour
 
     public AudioSource SoundSteer;
 
+    Animator animator;
+
     Rigidbody2D rb;
 
     bool isFullPlaceBlue;
@@ -25,7 +27,11 @@ public class Driver : MonoBehaviour
 
 
 
+    void Start()
+    {
+        animator = GetComponent<Animator>();
 
+    }
 
     void Update()
     {
@@ -39,6 +45,8 @@ public class Driver : MonoBehaviour
         CheckSoundSteer();
         isFullPlaceBlue = Delivery.isFullPlaceBlue;
         isFullPlaceBlack = Delivery.isFullPlaceBlack;
+        CheckMove();
+
 
 
     }
@@ -49,6 +57,18 @@ public class Driver : MonoBehaviour
         else IsMoving = false;
         if (IsMoving && !SoundWalk.isPlaying) SoundWalk.Play();
         if (!IsMoving) SoundWalk.Stop();
+    }
+
+    void CheckMove()
+    {
+        if (Input.GetAxis("Vertical") != 0)
+        {
+            animator.SetBool("IsWalk", true);
+        }
+        else
+        {
+            animator.SetBool("IsWalk", false);
+        }
     }
 
     void CheckSoundSteer()
@@ -62,10 +82,7 @@ public class Driver : MonoBehaviour
 
 
 
-    void Start()
-    {
 
-    }
 
     void OnCollisionEnter2D(Collision2D other)
     {

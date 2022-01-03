@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 593d5e597ff003042b7eba250ad58b1e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Laksaman
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 14febe5994b783346ab0d048b64b8a4b, type: 3}
+  - {fileID: 12800000, guid: 11f5a69e9dde3224dac17a0ff31e5d4f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

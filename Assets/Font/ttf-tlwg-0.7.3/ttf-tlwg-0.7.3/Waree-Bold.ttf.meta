@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e0b461a9accd9ee4ea099685803e0019
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Waree
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a0df599e5a86e8047987c890c465f481, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

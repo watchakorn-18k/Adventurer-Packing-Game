@@ -10,6 +10,8 @@ public class Timer : MonoBehaviour
     [SerializeField] Text TimerText;
     TimeSpan timeSpan;
     [SerializeField] GameObject gameOver;
+    Animator animator;
+
 
 
     Text ScorePackage;
@@ -17,8 +19,11 @@ public class Timer : MonoBehaviour
     void Start()
     {
         ScorePackage = GameObject.Find("ScorePackage").GetComponent<Text>();
+        animator = GameObject.Find("BgClock").GetComponent<Animator>();
+
 
         CountDownTimer();
+
 
 
     }
@@ -30,16 +35,20 @@ public class Timer : MonoBehaviour
         {
             timeSpan = TimeSpan.FromSeconds(CountDownStart);
             TimerText.text = String.Format(@"{0:mm\:ss}", timeSpan);
-
-            CountDownStart--;
-            Invoke("CountDownTimer", 1.0f);
+            StartCoroutine(WaitAnimationClock());
         }
         else
         {
             ShowGameOver();
-
-
         }
+    }
+    IEnumerator WaitAnimationClock()
+    {
+        yield return new WaitForSeconds(1.10f);
+
+        CountDownStart--;
+        Invoke("CountDownTimer", 1.0f);
+
     }
 
     void ShowGameOver()
@@ -55,9 +64,6 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-
-
-
 
     }
 }

@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: fa78049a50351c14eb920d18804b9b7d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Purisa
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d88c46121a57b2a4ca6c831767607827, type: 3}
+  - {fileID: 12800000, guid: e034c7696a68f4a4f9f4d62f6437a348, type: 3}
+  - {fileID: 12800000, guid: a8303d38b6763774d8eb6443f0c57a6d, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
