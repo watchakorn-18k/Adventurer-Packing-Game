@@ -6,6 +6,12 @@ Adventurer-Packing-Game</h1>
 
 # CHANGE LOG:
 
+## 05-01-2022:
+#### [✅]: # เพิ่มชาวบ้านลงไปในเมือง Add a new villager to the village.
+#### [✅]: # เพิ่ม object เล็กน้อยๆ ลงไปในเมือง Add a new object to the village.
+
+
+
 ## 04-01-2022:
 #### [✅]: # เพิ่ม Animation ลงใน Player กับ Ui ในเกม Add Animation to Player and Ui in game.
 #### [✅]: # เพิ่ม Scene Option ในเกม Add Scene Option in game.
