@@ -36,22 +36,24 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Package.cs" />
-     <Compile Include="Assets\Timer.cs" />
-     <Compile Include="Assets\StartLevel.cs" />
+     <Compile Include="Assets\ScriptAll\Package.cs" />
+     <Compile Include="Assets\ScriptAll\Timer.cs" />
+     <Compile Include="Assets\ScriptAll\StartLevel.cs" />
+     <Compile Include="Assets\ScriptOfMenu\ControlMenu.cs" />
      <Compile Include="Assets\ScriptOfMenu\FinishMenu.cs" />
-     <Compile Include="Assets\PlaceCustomBlue.cs" />
+     <Compile Include="Assets\ScriptAll\PlaceCustomBlue.cs" />
      <Compile Include="Assets\ScriptOfMenu\PauseMenu.cs" />
      <Compile Include="Assets\ScriptOfMenu\GameOver.cs" />
-     <Compile Include="Assets\MainMusic.cs" />
+     <Compile Include="Assets\ScriptOfMenu\SelectLevelMenu.cs" />
+     <Compile Include="Assets\ScriptAll\MainMusic.cs" />
      <Compile Include="Assets\ScriptOfMenu\LevelLoader.cs" />
      <Compile Include="Assets\ScriptOfMenu\MenuOption.cs" />
-     <Compile Include="Assets\Driver.cs" />
-     <Compile Include="Assets\PlaceCustomBlack.cs" />
-     <Compile Include="Assets\Delivery.cs" />
-     <Compile Include="Assets\FollowCamera.cs" />
+     <Compile Include="Assets\ScriptAll\Driver.cs" />
+     <Compile Include="Assets\ScriptAll\PlaceCustomBlack.cs" />
+     <Compile Include="Assets\ScriptAll\Delivery.cs" />
+     <Compile Include="Assets\ScriptAll\FollowCamera.cs" />
      <Compile Include="Assets\ScriptOfMenu\Menu.cs" />
-     <Compile Include="Assets\ScriptOfMenu\SelectLevelMenu.cs" />
+     <Compile Include="Assets\ScriptAll\Barrier.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

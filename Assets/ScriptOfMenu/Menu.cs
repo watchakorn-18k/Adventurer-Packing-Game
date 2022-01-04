@@ -50,6 +50,20 @@ public class Menu : MonoBehaviour
         //do something
     }
 
+    public void HelpConTrol()
+    {
+
+        StartCoroutine(WaitSoundClickToHelpConTrol());
+
+    }
+    IEnumerator WaitSoundClickToHelpConTrol()
+    {
+        SoundClickPlay.Play();
+        yield return new WaitForSeconds(0.4179592f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 5);
+        //do something
+    }
+
     public void PlaySoundClick()
     {
         SoundClickPlay.Play();

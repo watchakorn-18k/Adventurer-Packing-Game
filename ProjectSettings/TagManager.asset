@@ -13,6 +13,7 @@ TagManager:
   - Cargo
   - Timer
   - MusicBackground
+  - Cross
   layers:
   - Default
   - TransparentFX
