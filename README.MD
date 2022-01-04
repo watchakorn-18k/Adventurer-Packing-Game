@@ -5,6 +5,13 @@ Adventurer-Packing-Game</h1>
 </p>
 
 # CHANGE LOG:
+
+## 04-01-2022:
+#### [✅]: # เพิ่ม Animation ลงใน Player กับ Ui ในเกม Add Animation to Player and Ui in game.
+#### [✅]: # เพิ่ม Scene Option ในเกม Add Scene Option in game.
+#### [✅]: # เพิ่ม Scene SelectLevel เพื่อเลือกด่านในเกม Add Scene SelectLevel for select stage in game.
+#### [✅]: # เพิ่มฟังก์ชั่นเปิดปิดเสียงดนตรีในเกม Add function open and close siund music in game.
+
 ## 28-12-2021:
 #### [✅]: # เพิ่มเสียงต่างๆลงไปในเกม Add sound effect and music in the game.
 #### [✅]: # แก้ไขข้อผิดพลาดส่งพัสดุมากกว่าหนึ่งชิ้น Fix Bug send package more than one.
