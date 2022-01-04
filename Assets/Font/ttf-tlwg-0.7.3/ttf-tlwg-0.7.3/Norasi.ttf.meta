@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: f8395fce37c7e9e4d82e1e589e7e6438
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Norasi
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 75e7cb76ce7d128439a4ee9e287f1e4b, type: 3}
+  - {fileID: 12800000, guid: 46fe05fde4ced9d4b8c5cfbc3615b684, type: 3}
+  - {fileID: 12800000, guid: 732f59820ce6c1a4aa9d36e28df5c847, type: 3}
+  - {fileID: 12800000, guid: f5f7d8cffd5fd94418441f4e8aee7f79, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

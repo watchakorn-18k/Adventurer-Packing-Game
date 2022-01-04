@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 3332fb3b76f80624b99bb2c5d8470d3e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Kinnari
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 318ba4ccb8d9e4e44b6be82fa567f625, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

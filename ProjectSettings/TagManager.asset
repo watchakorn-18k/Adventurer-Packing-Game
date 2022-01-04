@@ -12,6 +12,8 @@ TagManager:
   - customerBlack
   - Cargo
   - Timer
+  - MusicBackground
+  - Cross
   layers:
   - Default
   - TransparentFX

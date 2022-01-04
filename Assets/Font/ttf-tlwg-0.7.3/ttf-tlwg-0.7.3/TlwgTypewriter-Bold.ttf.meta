@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 66d277e359b65af4791e272e7bd35a12
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Tlwg Typewriter
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1070983048ea77c4aa756a077f0e3f07, type: 3}
+  - {fileID: 12800000, guid: 11c062d1008b47641bbcbcfe1cfdcd32, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 6b0bae43c4216a040b0da35ad94a8243
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Loma
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 94d10385c5881fb49ada74c08ff4953c, type: 3}
+  - {fileID: 12800000, guid: 374d09283529ed64593a0b4574c91279, type: 3}
+  - {fileID: 12800000, guid: 9a2b8bfb4605f5c4a9fb419f4a13be94, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
