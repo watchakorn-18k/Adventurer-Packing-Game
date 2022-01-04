@@ -74,24 +74,23 @@ public class Menu : MonoBehaviour
             if (MenuOption.CheckMusic.isOn == null)
             {
                 Debug.Log("do not have everything");
-                MusicSoundTag.volume = 1;
+                MusicSoundTag.mute = false;
             }
             else if (MenuOption.CheckMusic.isOn)
             {
                 Debug.Log("Music on");
                 CheckedMusic = true;
-                MusicSoundTag.volume = 1;
+                MusicSoundTag.mute = false;
             }
             else
             {
                 Debug.Log("Music off");
                 CheckedMusic = false;
-                MusicSoundTag.volume = 0;
+                MusicSoundTag.mute = true;
             }
         }
         catch
         {
-            MusicSoundTag.volume = 1;
         }
     }
 

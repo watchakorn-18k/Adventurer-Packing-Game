@@ -1191,6 +1191,10 @@ PrefabInstance:
       value: MusicBackground
       objectReference: {fileID: 0}
     - target: {fileID: 1414089706258079415, guid: 4edda5a05380ccb47a0a4bf3e3329de7, type: 3}
+      propertyPath: Mute
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414089706258079415, guid: 4edda5a05380ccb47a0a4bf3e3329de7, type: 3}
       propertyPath: m_PlayOnAwake
       value: 1
       objectReference: {fileID: 0}
@@ -1316,7 +1320,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 423.5, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.127
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

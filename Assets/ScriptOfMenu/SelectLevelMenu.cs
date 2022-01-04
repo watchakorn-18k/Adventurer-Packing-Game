@@ -2,28 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-
-public class LevelLoader : MonoBehaviour
+public class SelectLevelMenu : MonoBehaviour
 {
-    public Slider slider;
-    // Start is called before the first frame update
+    AudioSource SoundPlay;
     AudioSource MusicSoundTag;
+
     void Start()
     {
+        SoundPlay = GameObject.Find("SoundClickPlay").GetComponent<AudioSource>();
         MusicSoundTag = GameObject.FindWithTag("MusicBackground").GetComponent<AudioSource>();
 
+
+    }
+    public void LoadLevel_1()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+    }
+
+    public void BackToMenu()
+    {
+        StartCoroutine(WaitSoundClickToBackToMenu());
+
+    }
+    IEnumerator WaitSoundClickToBackToMenu()
+    {
+        SoundPlay.Play();
+        yield return new WaitForSeconds(0.4179592f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 4);
+        //do something
+    }
+
+    public void PlaySoundClick()
+    {
+        SoundPlay.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        slider.value += 0.0009f;
-        if (slider.value == 1)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
-        }
         try
         {
             if (MenuOption.CheckMusic.isOn == null)
