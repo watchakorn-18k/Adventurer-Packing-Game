@@ -6,6 +6,11 @@ Adventurer-Packing-Game</h1>
 
 # CHANGE LOG:
 
+
+## 08-01-2022:
+#### [✅]: # เพิ่มคะแนนกับชื่อผู้เล่น Add Score and Player Name
+
+
 ## 05-01-2022:
 #### [✅]: # เพิ่มชาวบ้านลงไปในเมือง Add a new villager to the village.
 #### [✅]: # เพิ่ม object เล็กน้อยๆ ลงไปในเมือง Add a new object to the village.
