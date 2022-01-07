@@ -165,6 +165,7 @@ public class Delivery : MonoBehaviour
 
     void Update()
     {
+        PlayerPrefs.SetInt("Score", AmoutOfPackage);
 
 
 
@@ -210,6 +211,7 @@ public class Delivery : MonoBehaviour
             {
                 AmoutOfPlaceBlack += 1;
                 AmoutOfPackage += 1;
+
 
                 TxtReqBlack.text = $"{+AmoutOfPlaceBlack}/{MaxPackageBlack}";
                 AmoutBlack.text = AmoutOfPlaceBlack.ToString();
