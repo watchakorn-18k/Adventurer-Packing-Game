@@ -12,6 +12,9 @@ public class Timer : MonoBehaviour
     [SerializeField] GameObject gameOver;
     Animator animator;
 
+    public Animator Camera_animation;
+
+
 
 
     Text ScorePackage;
@@ -53,13 +56,17 @@ public class Timer : MonoBehaviour
 
     void ShowGameOver()
     {
-        Debug.Log("Time is up");
-        Time.timeScale = 0f;
-        gameOver.SetActive(true);
-        Text ScorePackageMenu;
-        ScorePackageMenu = GameObject.Find("ScorePackageMenu").GetComponent<Text>();
-        ScorePackageMenu.text = ScorePackage.text;
-
+        StartCoroutine(WaitForAnimation());
+        IEnumerator WaitForAnimation()
+        {
+            Camera_animation.SetBool("IsZoom", false);
+            yield return new WaitForSeconds(0.3f);
+            Time.timeScale = 0f;
+            gameOver.SetActive(true);
+            Text ScorePackageMenu;
+            ScorePackageMenu = GameObject.Find("ScorePackageMenu").GetComponent<Text>();
+            ScorePackageMenu.text = ScorePackage.text;
+        }
     }
 
     void Update()

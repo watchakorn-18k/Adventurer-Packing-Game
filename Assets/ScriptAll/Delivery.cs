@@ -33,6 +33,14 @@ public class Delivery : MonoBehaviour
     public static bool isFullPlaceBlack;
     public static GameObject Cargo;
 
+    public GameObject NewHightScore;
+
+    public Animator Camera_animation;
+
+
+
+
+
 
     bool hasPackage = false;
     bool isDelivering = false;
@@ -46,6 +54,7 @@ public class Delivery : MonoBehaviour
     Text ScorePackage;
     Text AmoutBlue;
     Text AmoutBlack;
+    Text ScoreAll;
 
     GameObject PackageOnCar;
     GameObject CustomerPlace;
@@ -54,6 +63,9 @@ public class Delivery : MonoBehaviour
 
     TextMesh TxtReqBlue;
     TextMesh TxtReqBlack;
+
+    Animator NewHightScore_animation;
+
 
 
     //Import Component
@@ -69,11 +81,35 @@ public class Delivery : MonoBehaviour
         ScorePackage = GameObject.Find("ScorePackage").GetComponent<Text>();
         AmoutBlue = GameObject.Find("AmoutBlue").GetComponent<Text>();
         AmoutBlack = GameObject.Find("AmoutBlack").GetComponent<Text>();
+        ScoreAll = GameObject.Find("ScoreAll").GetComponent<Text>();
         TxtReqBlue = GameObject.Find("FloatingTextBlue").GetComponent<TextMesh>();
         TxtReqBlack = GameObject.Find("FloatingTextBlack").GetComponent<TextMesh>();
+        NewHightScore_animation = NewHightScore.GetComponent<Animator>();
         TxtReqBlue.text = $"{+AmoutOfPlaceBlue}/{MaxPackageBlue}";
         TxtReqBlack.text = $"{+AmoutOfPlaceBlack}/{MaxPackageBlack}";
         ScorePackage.text = AmoutOfPackage.ToString();
+        NewHightScore_animation.SetBool("IsClose", false);
+
+
+
+    }
+
+    void Update()
+    {
+        PlayerPrefs.SetInt("Score", AmoutOfPackage);
+        ScoreAll.text = checkScore();
+        CheckPlaceAll();
+        CheckNewHightScore();
+        // PlayerPrefs.DeleteAll();
+
+
+
+
+
+
+
+
+
 
 
 
@@ -150,29 +186,31 @@ public class Delivery : MonoBehaviour
 
     void ShowFinish()
     {
-        Time.timeScale = 0f;
-        GameFinish.SetActive(true);
-        SoundMain.mute = true;
-        Text ScorePackageMenu;
-        Text TimerFinish;
-        ScorePackageMenu = GameObject.Find("ScorePackageMenu").GetComponent<Text>();
-        ScorePackageMenu.text = ScorePackage.text;
-        TimerFinish = GameObject.Find("TimerFinish").GetComponent<Text>();
-        TimerFinish.text = TimerInGame.text;
-        // TimerInGame
+
+
+
+        StartCoroutine(WaitForAnimation());
+        IEnumerator WaitForAnimation()
+        {
+            Camera_animation.SetBool("IsZoom", false);
+            yield return new WaitForSeconds(0.3f);
+            Time.timeScale = 0f;
+            GameFinish.SetActive(true);
+            SoundMain.mute = true;
+            Text ScorePackageMenu;
+            Text TimerFinish;
+            ScorePackageMenu = GameObject.Find("ScorePackageMenu").GetComponent<Text>();
+            ScorePackageMenu.text = ScorePackage.text;
+            TimerFinish = GameObject.Find("TimerFinish").GetComponent<Text>();
+            TimerFinish.text = TimerInGame.text;
+            // TimerInGame
+        }
 
 
     }
 
-    void Update()
+    void CheckPlaceAll()
     {
-        PlayerPrefs.SetInt("Score", AmoutOfPackage);
-
-
-
-
-
-
         if (ColorOfPlace == "Blue")
         {
             // เช็คถ้าของยังไม่ถูกทำลายจะให้รถไปอยู่ในตำแหน่ง CustomPlace
@@ -236,10 +274,8 @@ public class Delivery : MonoBehaviour
             ShowFinish();
 
         }
-
-
-
     }
+
     void SaveScoreTotxt()
     {
         string pathScore = Application.dataPath + "/Resources/SaveScore.txt";
@@ -255,6 +291,26 @@ public class Delivery : MonoBehaviour
         string[] lines = System.IO.File.ReadAllLines(path);
         string ScoreTxt = lines[lines.Length - 1];
         return ScoreTxt;
+    }
+
+    void CheckNewHightScore()
+    {
+
+        int ScoreCurrent = int.Parse(checkScore());
+        int highscore = PlayerPrefs.GetInt("HighScore");
+        if (ScoreCurrent > highscore)
+        {
+            NewHightScore.SetActive(true);
+            StartCoroutine(WaitForSecondsTime());
+
+            IEnumerator WaitForSecondsTime()
+            {
+                yield return new WaitForSeconds(60);
+                NewHightScore_animation.SetBool("IsClose", true);
+            }
+
+        }
+
     }
 
 

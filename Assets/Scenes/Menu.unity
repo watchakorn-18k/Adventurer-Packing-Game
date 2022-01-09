@@ -158,8 +158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14.5, y: -7.5}
-  m_SizeDelta: {x: 49.303, y: 11.9509}
+  m_AnchoredPosition: {x: -1.1576, y: -7.8}
+  m_SizeDelta: {x: 56.8405, y: 14.2839}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &61157307
 MonoBehaviour:
@@ -191,10 +191,10 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 1
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0E0A\u0E37\u0E48\u0E2D\u0E1C\u0E39\u0E49\u0E40\u0E25\u0E48\u0E19"
+  m_Text: "\u0E14\u0E19\u0E31\u0E22 \u0E43\u0E1A\u0E21\u0E30\u0E21\u0E48\u0E27\u0E07"
 --- !u!222 &61157308
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1500,6 +1500,7 @@ GameObject:
   - component: {fileID: 958047111}
   - component: {fileID: 958047114}
   - component: {fileID: 958047112}
+  - component: {fileID: 958047115}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -1553,6 +1554,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958047110}
   m_CullTransparentMesh: 1
+--- !u!95 &958047115
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958047110}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb6ae58e76d5e2f43a9b617374037286, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1001783654
 GameObject:
   m_ObjectHideFlags: 0

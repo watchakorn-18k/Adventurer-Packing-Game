@@ -16,7 +16,7 @@ public class ShowHightScore : MonoBehaviour
     {
         ScorePlayer = int.Parse(checkScore());
         highscore = PlayerPrefs.GetInt("HighScore");
-        Debug.Log(highscore);
+        // PlayerPrefs.DeleteAll();
 
 
 
@@ -25,13 +25,7 @@ public class ShowHightScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ScorePlayer > highscore)
-        {
-            highscore = ScorePlayer;
-            PlayerPrefs.SetInt("HighScore", highscore);
-            PlayerPrefs.SetString("HighScoreNamePlayer", PlayerPrefs.GetString("SaveName").ToString());
-            SaveFinalScore();
-        }
+        NewHightScore();
         obj_txt_score_top.text = highscore.ToString();
         obj_txt_name_top.text = PlayerPrefs.GetString("HighScoreNamePlayer");
 
@@ -44,6 +38,18 @@ public class ShowHightScore : MonoBehaviour
         string ScoreTxt = lines[lines.Length - 1];
         return ScoreTxt;
     }
+
+    void NewHightScore()
+    {
+        if (ScorePlayer > highscore)
+        {
+            highscore = ScorePlayer;
+            PlayerPrefs.SetInt("HighScore", highscore);
+            PlayerPrefs.SetString("HighScoreNamePlayer", PlayerPrefs.GetString("SaveName").ToString());
+            SaveFinalScore();
+        }
+    }
+
     void SaveFinalScore()
     {
         string path = Application.dataPath + "/Resources/SaveFinalScore.txt";

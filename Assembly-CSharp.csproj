@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\ScriptOfMenu\ShowHightScore.cs" />
      <Compile Include="Assets\ScriptAll\Barrier.cs" />
      <Compile Include="Assets\ScriptAll\Package.cs" />
      <Compile Include="Assets\ScriptAll\Timer.cs" />
@@ -57,8 +58,6 @@
      <Compile Include="Assets\ScriptAll\Delivery.cs" />
      <Compile Include="Assets\ScriptAll\FollowCamera.cs" />
      <Compile Include="Assets\ScriptOfMenu\Menu.cs" />
-     <Compile Include="Assets\ScriptOfMenu\ShowHightScore.cs" />
-     <None Include="Assets\ScriptOfMenu\Temp.txt" />
      <None Include="Assets\Resources\SaveFinalScore.txt" />
      <None Include="Assets\Resources\SaveScore.txt" />
      <None Include="Assets\Resources\SaveName.txt" />

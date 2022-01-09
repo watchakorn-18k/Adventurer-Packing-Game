@@ -8,6 +8,7 @@ public class GameOver : MonoBehaviour
 
 {
     public AudioSource SoundClickPlay;
+
     public void Restart()
     {
         StartCoroutine(WaitSoundClickToRestart());

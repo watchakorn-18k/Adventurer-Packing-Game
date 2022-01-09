@@ -8,6 +8,14 @@ Adventurer-Packing-Game</h1>
 
 
 
+
+## 10-01-2022:
+#### [✅]: # เพิ่มอนิเมชั่นกล้อง Add Animation Camera
+#### [✅]: # แก้ไขอนิเมชั่นส่วนอื่นเพื่มเติม Fix Animation some thing more 
+#### [✅]: # เปลี่ยนแบบตัวอักษรคะแนน Change Font Score
+#### [✅]: # เพิ่มแสดงคะแนนทั้งหมดและแสดงทำลายสถิติใหม่  Add Show Score Total and Show break a new record
+
+
 ## 09-01-2022:
 #### [✅]: # เพิ่มคะแนนสูงสุดลงหน้าเมนู Add Hight Score on Menu
 ## 08-01-2022:

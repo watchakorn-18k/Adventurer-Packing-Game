@@ -9,14 +9,17 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
     public AudioSource SoundClickPlay;
+    public Animator Camera_animation;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+
             if (GameIsPaused)
             {
+                Camera_animation.SetBool("IsZoom", true);
                 Resume();
             }
             else
@@ -45,9 +48,16 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        GameIsPaused = true;
+
+        StartCoroutine(WaitForAnimation());
+        IEnumerator WaitForAnimation()
+        {
+            Camera_animation.SetBool("IsZoom", false);
+            yield return new WaitForSeconds(0.3f);
+            pauseMenuUI.SetActive(true);
+            Time.timeScale = 0f;
+            GameIsPaused = true;
+        }
 
     }
 
