@@ -44,20 +44,24 @@
      <Compile Include="Assets\ScriptOfMenu\FinishMenu.cs" />
      <Compile Include="Assets\ScriptAll\PlaceCustomBlue.cs" />
      <Compile Include="Assets\ScriptOfMenu\PauseMenu.cs" />
+     <Compile Include="Assets\ScriptAll\TextNamePlayer.cs" />
      <Compile Include="Assets\ScriptOfMenu\GameOver.cs" />
      <Compile Include="Assets\ScriptOfMenu\SelectLevelMenu.cs" />
+     <Compile Include="Assets\ScriptOfMenu\ShowNameMenue.cs" />
      <Compile Include="Assets\ScriptAll\MainMusic.cs" />
      <Compile Include="Assets\ScriptOfMenu\LevelLoader.cs" />
+     <Compile Include="Assets\ScriptOfMenu\SaveName.cs" />
      <Compile Include="Assets\ScriptOfMenu\MenuOption.cs" />
      <Compile Include="Assets\ScriptAll\Driver.cs" />
      <Compile Include="Assets\ScriptAll\PlaceCustomBlack.cs" />
      <Compile Include="Assets\ScriptAll\Delivery.cs" />
      <Compile Include="Assets\ScriptAll\FollowCamera.cs" />
      <Compile Include="Assets\ScriptOfMenu\Menu.cs" />
-     <Compile Include="Assets\ScriptOfMenu\SaveName.cs" />
-     <Compile Include="Assets\ScriptOfMenu\ShowNameMenue.cs" />
-     <Compile Include="Assets\ScriptAll\TextNamePlayer.cs" />
-     <None Include="Assets\SaveName.txt" />
+     <Compile Include="Assets\ScriptOfMenu\ShowHightScore.cs" />
+     <None Include="Assets\ScriptOfMenu\Temp.txt" />
+     <None Include="Assets\Resources\SaveFinalScore.txt" />
+     <None Include="Assets\Resources\SaveScore.txt" />
+     <None Include="Assets\Resources\SaveName.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

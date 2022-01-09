@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class Delivery : MonoBehaviour
 {
@@ -171,6 +172,7 @@ public class Delivery : MonoBehaviour
 
 
 
+
         if (ColorOfPlace == "Blue")
         {
             // เช็คถ้าของยังไม่ถูกทำลายจะให้รถไปอยู่ในตำแหน่ง CustomPlace
@@ -184,6 +186,7 @@ public class Delivery : MonoBehaviour
             {
                 AmoutOfPlaceBlue += 1;
                 AmoutOfPackage += 1;
+                SaveScoreTotxt();
 
                 TxtReqBlue.text = $"{+AmoutOfPlaceBlue}/{MaxPackageBlue}";
                 AmoutBlue.text = AmoutOfPlaceBlue.ToString();
@@ -211,6 +214,7 @@ public class Delivery : MonoBehaviour
             {
                 AmoutOfPlaceBlack += 1;
                 AmoutOfPackage += 1;
+                SaveScoreTotxt();
 
 
                 TxtReqBlack.text = $"{+AmoutOfPlaceBlack}/{MaxPackageBlack}";
@@ -235,6 +239,22 @@ public class Delivery : MonoBehaviour
 
 
 
+    }
+    void SaveScoreTotxt()
+    {
+        string pathScore = Application.dataPath + "/Resources/SaveScore.txt";
+        string pathName = Application.dataPath + "/Resources/SaveName.txt";
+        File.AppendAllText(pathName, PlayerPrefs.GetString("SaveName") + "\n");
+
+        File.AppendAllText(pathScore, $"{int.Parse(checkScore()) + 1}" + "\n");
+    }
+
+    string checkScore()
+    {
+        string path = "Assets/Resources/SaveScore.txt";
+        string[] lines = System.IO.File.ReadAllLines(path);
+        string ScoreTxt = lines[lines.Length - 1];
+        return ScoreTxt;
     }
 
 

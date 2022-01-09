@@ -12,18 +12,24 @@ public class ShowNameMenue : MonoBehaviour
     {
 
 
+
     }
 
     void Update()
     {
-        Debug.Log(PlayerPrefs.GetString("SaveName"));
-        Debug.Log(PlayerPrefs.GetInt("Score"));
         obj_txt_name_top.text = PlayerPrefs.GetString("SaveName");
-        obj_txt_score_top.text = PlayerPrefs.GetInt("Score").ToString();
+        obj_txt_score_top.text = checkScore().ToString();
 
     }
     public void ChangeName()
     {
         Application.LoadLevel("Name");
+    }
+    string checkScore()
+    {
+        string path = "Assets/Resources/SaveScore.txt";
+        string[] lines = System.IO.File.ReadAllLines(path);
+        string ScoreTxt = lines[lines.Length - 1];
+        return ScoreTxt;
     }
 }

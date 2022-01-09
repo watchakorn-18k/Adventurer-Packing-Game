@@ -7,6 +7,9 @@ Adventurer-Packing-Game</h1>
 # CHANGE LOG:
 
 
+
+## 09-01-2022:
+#### [✅]: # เพิ่มคะแนนสูงสุดลงหน้าเมนู Add Hight Score on Menu
 ## 08-01-2022:
 #### [✅]: # เพิ่มคะแนนกับชื่อผู้เล่น Add Score and Player Name
 
