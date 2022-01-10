@@ -10,6 +10,8 @@ Adventurer-Packing-Game</h1>
 
 
 ## 10-01-2022:
+
+#### [✅]: # เพิ่มเอฟเฟ็คเดินของควาย Add Effect Walk of Monster
 #### [✅]: # เพิ่มอนิเมชั่นกล้อง Add Animation Camera
 #### [✅]: # แก้ไขอนิเมชั่นส่วนอื่นเพื่มเติม Fix Animation some thing more 
 #### [✅]: # เปลี่ยนแบบตัวอักษรคะแนน Change Font Score

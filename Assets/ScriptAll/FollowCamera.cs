@@ -8,6 +8,7 @@ public class FollowCamera : MonoBehaviour
     // นี่คือตำแหน่งกล้อง ควรจะอยู่ในตำแหน่งเดียวกับตำแหน่งรถ
     [SerializeField] GameObject สิ่งที่ต้องการติดตาม;
 
+
     public Animator Camera_animation;
 
     void Start()

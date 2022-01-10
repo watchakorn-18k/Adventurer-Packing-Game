@@ -7,9 +7,14 @@ public class Driver : MonoBehaviour
     [SerializeField] int steerSpeed = 300;
     [SerializeField] int moveSpeed = 10;
 
+    public GameObject EffectWalk_1;
+    public GameObject EffectWalk_2;
+
     public AudioSource SoundWalk;
 
     public AudioSource SoundSteer;
+
+    public GameObject EffectWalk;
 
     Animator animator;
 
@@ -84,10 +89,14 @@ public class Driver : MonoBehaviour
         if (Input.GetAxis("Vertical") != 0)
         {
             animator.SetBool("IsWalk", true);
+            EffectWalk_2.SetActive(true);
+            EffectWalk_1.SetActive(true);
         }
         else
         {
             animator.SetBool("IsWalk", false);
+            EffectWalk_2.SetActive(false);
+            EffectWalk_1.SetActive(false);
         }
     }
 

@@ -45,6 +45,7 @@
      <Compile Include="Assets\ScriptOfMenu\FinishMenu.cs" />
      <Compile Include="Assets\ScriptAll\PlaceCustomBlue.cs" />
      <Compile Include="Assets\ScriptOfMenu\PauseMenu.cs" />
+     <Compile Include="Assets\EffectWalk.cs" />
      <Compile Include="Assets\ScriptAll\TextNamePlayer.cs" />
      <Compile Include="Assets\ScriptOfMenu\GameOver.cs" />
      <Compile Include="Assets\ScriptOfMenu\SelectLevelMenu.cs" />
