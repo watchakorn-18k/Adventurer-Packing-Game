@@ -19,12 +19,11 @@ public class LevelLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // slider.value += 0.0009f;
-        // if (slider.value == 1)
-        // {
-        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
-        // }
-        LoadLevel("Select_Level");
+        slider.value += 0.09f;
+        if (slider.value == 1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+        }
         try
         {
             if (MenuOption.CheckMusic.isOn == null)
