@@ -19,26 +19,26 @@ public class LevelLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.value += 0.0009f;
-        if (slider.value == 1)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
-        }
+        // slider.value += 0.0009f;
+        // if (slider.value == 1)
+        // {
+        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+        // }
+        LoadLevel("Select_Level");
         try
         {
             if (MenuOption.CheckMusic.isOn == null)
             {
-                Debug.Log("do not have everything");
+
                 MusicSoundTag.volume = 0.413f;
             }
             else if (MenuOption.CheckMusic.isOn)
             {
-                Debug.Log("Music on");
+
                 MusicSoundTag.volume = 0.413f;
             }
             else
             {
-                Debug.Log("Music off");
                 MusicSoundTag.volume = 0;
             }
         }
@@ -47,5 +47,23 @@ public class LevelLoader : MonoBehaviour
             MusicSoundTag.volume = 0.413f;
         }
 
+    }
+    public void LoadLevel(string levelName)
+    {
+        StartCoroutine(LoadSceneAsync(levelName));
+    }
+
+    IEnumerator LoadSceneAsync(string levelName)
+    {
+        AsyncOperation op = SceneManager.LoadSceneAsync(levelName);
+
+        while (!op.isDone)
+        {
+            float progress = Mathf.Clamp01(op.progress / .9f);
+            Debug.Log(op.progress);
+            slider.value = progress;
+
+            yield return null;
+        }
     }
 }

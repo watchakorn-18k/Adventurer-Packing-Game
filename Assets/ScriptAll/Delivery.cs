@@ -287,7 +287,7 @@ public class Delivery : MonoBehaviour
 
     string checkScore()
     {
-        string path = "Assets/Resources/SaveScore.txt";
+        string path = Application.dataPath + "/Resources/SaveScore.txt";
         string[] lines = System.IO.File.ReadAllLines(path);
         string ScoreTxt = lines[lines.Length - 1];
         return ScoreTxt;
@@ -298,18 +298,29 @@ public class Delivery : MonoBehaviour
 
         int ScoreCurrent = int.Parse(checkScore());
         int highscore = PlayerPrefs.GetInt("HighScore");
-        if (ScoreCurrent > highscore)
-        {
-            NewHightScore.SetActive(true);
-            StartCoroutine(WaitForSecondsTime());
 
-            IEnumerator WaitForSecondsTime()
+        if (highscore == 0)
+        {
+            NewHightScore.SetActive(false);
+
+        }
+        else
+        {
+            if (ScoreCurrent > highscore)
             {
-                yield return new WaitForSeconds(60);
-                NewHightScore_animation.SetBool("IsClose", true);
+                NewHightScore.SetActive(true);
+                StartCoroutine(WaitForSecondsTime());
+
+                IEnumerator WaitForSecondsTime()
+                {
+                    yield return new WaitForSeconds(60);
+                    NewHightScore_animation.SetBool("IsClose", true);
+                }
+
             }
 
         }
+
 
     }
 

@@ -27,7 +27,7 @@ public class ShowNameMenue : MonoBehaviour
     }
     string checkScore()
     {
-        string path = "Assets/Resources/SaveScore.txt";
+        string path = Application.dataPath + "/Resources/SaveScore.txt";
         string[] lines = System.IO.File.ReadAllLines(path);
         string ScoreTxt = lines[lines.Length - 1];
         return ScoreTxt;

@@ -16,6 +16,9 @@ public class Driver : MonoBehaviour
 
     public GameObject EffectWalk;
 
+    public GameObject ShowKeyboardSpace;
+    public GameObject ShowKeyboardArrow;
+
     Animator animator;
 
     Rigidbody2D rb;
@@ -56,23 +59,75 @@ public class Driver : MonoBehaviour
         isFullPlaceBlue = Delivery.isFullPlaceBlue;
         isFullPlaceBlack = Delivery.isFullPlaceBlack;
         CheckMove();
+        ChecKArroKey();
+
 
 
 
     }
+    void ChecKArroKey()
+    {
+        if (Input.GetKey("up"))
+        {
+            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowUp", true);
+
+        }
+        else
+        {
+            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowUp", false);
+        }
+
+        if (Input.GetKey("down"))
+        {
+            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowDown", true);
+
+        }
+        else
+        {
+            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowDown", false);
+
+        }
+
+        if (Input.GetKey("left"))
+        {
+            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowLeft", true);
+
+        }
+        else
+        {
+            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowLeft", false);
+
+        }
+
+        if (Input.GetKey("right"))
+        {
+            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowRight", true);
+
+        }
+        else
+        {
+            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowRight", false);
+
+        }
+    }
 
     void CheckHoldSpace()
     {
+
+
         if (SpeedUp > 0)
         {
             moveSpeed = 20;
+            ShowKeyboardSpace.GetComponent<Animator>().SetBool("IsIdleSpace", true);
         }
         else
         {
             moveSpeed = 10;
+            ShowKeyboardSpace.GetComponent<Animator>().SetBool("IsIdleSpace", false);
+
         }
-        if (Input.GetAxis("Jump") != 0) IsSpeedUp = true;
-        else IsSpeedUp = false;
+        if (Input.GetAxis("Jump") > 0.20f) ShowKeyboardSpace.GetComponent<Animator>().SetBool("HoldSpace", true);//IsSpeedUp = true
+        else ShowKeyboardSpace.GetComponent<Animator>().SetBool("HoldSpace", false);
 
     }
 

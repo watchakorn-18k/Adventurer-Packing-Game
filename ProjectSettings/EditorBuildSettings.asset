@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/Scenes/SplashScene18K.unity
+    guid: 6781466037f72e943a0f91460d007b69
+  - enabled: 1
+    path: Assets/Scenes/SplashScene.unity
+    guid: 2339a91b90f1a5c41a23472ea319ff23
+  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 72b5c17c4ed76b949af70533d23747da
   - enabled: 0

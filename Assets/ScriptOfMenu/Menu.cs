@@ -13,6 +13,8 @@ public class Menu : MonoBehaviour
 
     public static int CheckedQulity;
 
+    public static bool IsPanelReturn;
+
     AudioSource MusicSoundTag;
 
     void Start()
@@ -27,6 +29,7 @@ public class Menu : MonoBehaviour
         CheckToggleMusic();
         CheckToggleFullScreen();
         CheckedDropdownQulity();
+        CheckIsPanelReturn();
 
     }
 
@@ -87,7 +90,7 @@ public class Menu : MonoBehaviour
         {
             if (MenuOption.CheckMusic.isOn == null)
             {
-                Debug.Log("do not have everything");
+
                 MusicSoundTag.mute = false;
             }
             else if (MenuOption.CheckMusic.isOn)
@@ -107,6 +110,28 @@ public class Menu : MonoBehaviour
         {
         }
     }
+
+    void CheckIsPanelReturn()
+    {
+        try
+        {
+            if (MenuOption.PanelDisplay.isOn == null)
+            {
+            }
+            else if (MenuOption.PanelDisplay.isOn)
+            {
+                IsPanelReturn = true;
+            }
+            else
+            {
+                IsPanelReturn = false;
+            }
+        }
+        catch
+        {
+        }
+    }
+
 
     void CheckToggleFullScreen()
     {

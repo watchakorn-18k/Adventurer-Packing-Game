@@ -10,6 +10,7 @@ public class StartLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Time.timeScale = 0f;
         BoxStart = GameObject.Find("StartLevel");
         SoundClickPlay = GameObject.Find("SoundClickPlay").GetComponent<AudioSource>();
@@ -32,6 +33,13 @@ public class StartLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Return))
+        {
+            GotIt();
+
+
+        }
+
 
     }
 }

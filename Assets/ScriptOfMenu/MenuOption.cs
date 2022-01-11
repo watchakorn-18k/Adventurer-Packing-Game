@@ -13,6 +13,10 @@ public class MenuOption : MonoBehaviour
 
     public static Dropdown CheckQulity;
 
+    public static bool IsPanel;
+
+    public static Toggle PanelDisplay;
+
 
 
 
@@ -26,10 +30,12 @@ public class MenuOption : MonoBehaviour
         MusicSoundTag = GameObject.FindWithTag("MusicBackground").GetComponent<AudioSource>();
         CheckMusic = GameObject.Find("CheckMusic").GetComponent<Toggle>();
         CheckFullScreen = GameObject.Find("FullSceeneToggle").GetComponent<Toggle>();
+        PanelDisplay = GameObject.Find("CheckPanelKeyborad").GetComponent<Toggle>();
         CheckQulity = GameObject.Find("GraphicDropdown").GetComponent<Dropdown>();
         CheckBoolMusicFromMenu();
         CheckBoolFullSreenFromMenu();
         CheckBoolCheckedQulityFromMenu();
+        CheckPannelPublicFromMenu();
 
 
     }
@@ -37,6 +43,7 @@ public class MenuOption : MonoBehaviour
     public void Update()
     {
         CheckMuteMusic();
+        CheckPanelKeyboardOnOff();
 
 
     }
@@ -113,5 +120,25 @@ public class MenuOption : MonoBehaviour
     void CheckBoolCheckedQulityFromMenu()
     {
         CheckQulity.value = Menu.CheckedQulity;
+    }
+
+    void CheckPanelKeyboardOnOff()
+    {
+        if (!PanelDisplay.isOn)
+        {
+            IsPanel = false;
+        }
+        else
+        {
+            IsPanel = true;
+        }
+
+
+    }
+
+    void CheckPannelPublicFromMenu()
+    {
+        if (!Menu.IsPanelReturn) PanelDisplay.isOn = false;
+        else PanelDisplay.isOn = true;
     }
 }

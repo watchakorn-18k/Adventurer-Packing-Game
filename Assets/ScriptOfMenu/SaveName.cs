@@ -74,14 +74,14 @@ public class SaveName : MonoBehaviour
 
     string checkName()
     {
-        string path = "Assets/Resources/SaveName.txt";
+        string path = Application.dataPath + "/Resources/SaveName.txt";
         string[] lines = System.IO.File.ReadAllLines(path);
         string NameTxt = lines[lines.Length - 1];
         return NameTxt;
     }
     string checkScore()
     {
-        string path = "Assets/Resources/SaveScore.txt";
+        string path = Application.dataPath + "/Resources/SaveScore.txt";
         string[] lines = System.IO.File.ReadAllLines(path);
         string ScoreTxt = lines[lines.Length - 1];
         return ScoreTxt;

@@ -10,13 +10,15 @@ public class ShowHightScore : MonoBehaviour
     int highscore;
     public Text obj_txt_score_top;
     public Text obj_txt_name_top;
+    public GameObject obj_img_box;
 
     // Start is called before the first frame update
     void Start()
     {
+        // PlayerPrefs.DeleteAll();
         ScorePlayer = int.Parse(checkScore());
         highscore = PlayerPrefs.GetInt("HighScore");
-        // PlayerPrefs.DeleteAll();
+
 
 
 
@@ -28,12 +30,22 @@ public class ShowHightScore : MonoBehaviour
         NewHightScore();
         obj_txt_score_top.text = highscore.ToString();
         obj_txt_name_top.text = PlayerPrefs.GetString("HighScoreNamePlayer");
+        if (highscore == 0)
+        {
+            obj_img_box.SetActive(false);
+
+        }
+        else
+        {
+            obj_img_box.SetActive(true);
+
+        }
 
 
     }
     string checkScore()
     {
-        string path = "Assets/Resources/SaveScore.txt";
+        string path = Application.dataPath + "/Resources/SaveScore.txt";
         string[] lines = System.IO.File.ReadAllLines(path);
         string ScoreTxt = lines[lines.Length - 1];
         return ScoreTxt;

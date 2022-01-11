@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\ScriptOfMenu\ShowHightScore.cs" />
+     <Compile Include="Assets\ScriptAll\CheckScene.cs" />
      <Compile Include="Assets\ScriptAll\Barrier.cs" />
      <Compile Include="Assets\ScriptAll\Package.cs" />
      <Compile Include="Assets\ScriptAll\Timer.cs" />
@@ -45,7 +46,7 @@
      <Compile Include="Assets\ScriptOfMenu\FinishMenu.cs" />
      <Compile Include="Assets\ScriptAll\PlaceCustomBlue.cs" />
      <Compile Include="Assets\ScriptOfMenu\PauseMenu.cs" />
-     <Compile Include="Assets\EffectWalk.cs" />
+     <Compile Include="Assets\ScriptAll\EffectWalk.cs" />
      <Compile Include="Assets\ScriptAll\TextNamePlayer.cs" />
      <Compile Include="Assets\ScriptOfMenu\GameOver.cs" />
      <Compile Include="Assets\ScriptOfMenu\SelectLevelMenu.cs" />
@@ -59,6 +60,8 @@
      <Compile Include="Assets\ScriptAll\Delivery.cs" />
      <Compile Include="Assets\ScriptAll\FollowCamera.cs" />
      <Compile Include="Assets\ScriptOfMenu\Menu.cs" />
+     <Compile Include="Assets\ScriptAll\ControlUIinGame.cs" />
+     <Compile Include="Assets\ScriptAll\NextScene.cs" />
      <None Include="Assets\Resources\SaveFinalScore.txt" />
      <None Include="Assets\Resources\SaveScore.txt" />
      <None Include="Assets\Resources\SaveName.txt" />
