@@ -9,9 +9,13 @@ https://user-images.githubusercontent.com/74919942/148860542-e1c6ec9b-c2ea-4d53-
 # CHANGE LOG:
 
 
+## 11-01-2022:
+#### [✅]: # แก้ข้อผิดพลาด Loading Screen Fix Bug Loading Screen
 
+#
+## ✅ ปล่อย alpha 3.0 Release alpha 3.0  
+#
 
-#### [✅]: # ปล่อย alpha 3.0 Release alpha 3.0
 ## 11-01-2022: 
 
 #### [✅]: # เพิ่มเปิดปิดแผงควบคุมการเล่นเกม Add Toggle On Off Panel GamePlay KeyBorad

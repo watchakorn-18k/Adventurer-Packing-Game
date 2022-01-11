@@ -19,7 +19,7 @@ public class LevelLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.value += 0.09f;
+        slider.value += 0.0009f;
         if (slider.value == 1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
