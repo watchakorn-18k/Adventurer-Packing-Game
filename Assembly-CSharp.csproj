@@ -52,6 +52,7 @@
      <Compile Include="Assets\ScriptAll\TextNamePlayer.cs" />
      <Compile Include="Assets\ScriptOfMenu\GameOver.cs" />
      <Compile Include="Assets\ScriptOfMenu\SelectLevelMenu.cs" />
+     <Compile Include="Assets\ScriptAll\JoyStick.cs" />
      <Compile Include="Assets\ScriptOfMenu\ShowNameMenue.cs" />
      <Compile Include="Assets\ScriptAll\MainMusic.cs" />
      <Compile Include="Assets\ScriptOfMenu\LevelLoader.cs" />
@@ -62,8 +63,12 @@
      <Compile Include="Assets\ScriptAll\Delivery.cs" />
      <Compile Include="Assets\ScriptAll\FollowCamera.cs" />
      <Compile Include="Assets\ScriptOfMenu\Menu.cs" />
+     <Compile Include="Assets\MainMenu.cs" />
+     <Compile Include="Assets\LanguageChange.cs" />
      <None Include="Assets\Resources\SaveFinalScore.txt" />
      <None Include="Assets\Resources\SaveScore.txt" />
+     <None Include="Assets\Lean\READ ME.txt" />
+     <None Include="Assets\Lean\Third-Party Notices.txt" />
      <None Include="Assets\Resources\SaveName.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
@@ -818,8 +823,48 @@
     <Reference Include="Unity.VisualScripting.State">
         <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Addressables">
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables.Editor">
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\Unity.Addressables.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.CacheServer">
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\UnityEditor.CacheServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\Unity.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ScriptableBuildPipeline">
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Localization.Editor">
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\Unity.Localization.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Localization">
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\Unity.Localization.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="LeanLocalizationEditor.csproj">
+      <Project>{b262f792-b7c6-378a-f70e-f052622d1f03}</Project>
+      <Name>LeanLocalizationEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeanLocalization.csproj">
+      <Project>{ad31279e-3aef-e583-22c8-217ad044d5a6}</Project>
+      <Name>LeanLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeanCommon.csproj">
+      <Project>{4298f405-6d47-92a6-3ff9-a62a9057bb40}</Project>
+      <Name>LeanCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="com.ben-w.erp.csproj">
+      <Project>{d5c4b8d6-c695-0a51-37d1-b353fae9ba9d}</Project>
+      <Name>com.ben-w.erp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

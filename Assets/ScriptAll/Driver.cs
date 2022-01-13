@@ -33,7 +33,15 @@ public class Driver : MonoBehaviour
 
     float steerAmout;
     float moveAmout;
+
     float SpeedUp;
+
+    bool touchStart = false;
+
+    Vector2 PointA;
+    Vector2 PointB;
+
+    float speed = 10f;
 
 
 
@@ -53,6 +61,7 @@ public class Driver : MonoBehaviour
         SpeedUp = Input.GetAxis("Jump") * moveSpeed * Time.deltaTime;
         transform.Rotate(0, 0, -steerAmout);
         transform.Translate(0, moveAmout, 0);
+        JotStick();
         CheckHoldSpace();
         CheckSoundMove();
         CheckSoundSteer();
@@ -65,6 +74,40 @@ public class Driver : MonoBehaviour
 
 
     }
+
+    void JotStick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            PointA = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
+        }
+        if (Input.GetMouseButton(0))
+        {
+            touchStart = true;
+            PointB = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
+        }
+        else
+        {
+            touchStart = false;
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (touchStart)
+        {
+            Vector2 offset = PointB - PointA;
+            Vector2 direction = Vector2.ClampMagnitude(offset, 500.0f);
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
+
+
+        }
+    }
+
+
+
     void ChecKArroKey()
     {
         if (Input.GetKey("up"))
