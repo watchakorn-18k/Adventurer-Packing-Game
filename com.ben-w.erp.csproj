@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0c9d68b9-f559-a51b-41d3-c93d0db73948}</ProjectGuid>
+    <ProjectGuid>{d5c4b8d6-c695-0a51-37d1-b353fae9ba9d}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>com.ben-w.erp</AssemblyName>
@@ -36,16 +36,16 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\StorageManager.cs" />
-     <Compile Include="Assets\ERP\Editor\ERPSettings.cs" />
-     <Compile Include="Assets\ERP\Editor\ERP.cs" />
-     <Compile Include="Assets\ERP\Editor\ERPWindow.cs" />
-     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\ImageManager.cs" />
-     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\ActivityManager.cs" />
-     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\Core.cs" />
-     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\LobbyManager.cs" />
-     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\Constants.cs" />
      <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\StoreManager.cs" />
+     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\Core.cs" />
+     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\ImageManager.cs" />
+     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\LobbyManager.cs" />
+     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\StorageManager.cs" />
+     <Compile Include="Assets\ERP\Editor\ERP.cs" />
+     <Compile Include="Assets\ERP\Editor\ERPSettings.cs" />
+     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\Constants.cs" />
+     <Compile Include="Assets\ERP\Editor\ERPWindow.cs" />
+     <Compile Include="Assets\ERP\Editor\Plugins\DiscordSDK\ActivityManager.cs" />
      <None Include="Assets\ERP\Editor\com.ben-w.erp.asmdef" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
@@ -296,47 +296,50 @@
     <Reference Include="UnityEditor.WebGL.Extensions">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\PlaybackEngines\WebGLSupport\UnityEditor.WebGL.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.OSXStandalone.Extensions">
+        <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\PlaybackEngines\MacStandaloneSupport\UnityEditor.OSXStandalone.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.collab-proxy@1.15.4\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.collab-proxy@1.15.4\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.collab-proxy@1.15.4\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.collab-proxy@1.15.4\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.YamlDotNet">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.collab-proxy@1.15.4\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.collab-proxy@1.15.4\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.Unsafe.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Cecil.Mdb">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.IonicZip">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Cecil.Pdb">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Cecil">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.collab-proxy@1.15.4\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.collab-proxy@1.15.4\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Cecil.Rocks">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.burst@1.6.0\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.visualscripting@1.7.6\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.visualscripting@1.7.6\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
@@ -705,10 +708,10 @@
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-        <HintPath>D:\FILE_UNITY_PROJECTS\Game Car\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+        <HintPath>D:\FILE_UNITY_PROJECTS\Adventurer-Packing-Game\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

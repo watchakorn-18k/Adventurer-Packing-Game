@@ -26,6 +26,7 @@ public class MenuOption : MonoBehaviour
 
     public void Start()
     {
+        CheckLanguage();
 
         MusicSoundTag = GameObject.FindWithTag("MusicBackground").GetComponent<AudioSource>();
         CheckMusic = GameObject.Find("CheckMusic").GetComponent<Toggle>();
@@ -36,6 +37,8 @@ public class MenuOption : MonoBehaviour
         CheckBoolFullSreenFromMenu();
         CheckBoolCheckedQulityFromMenu();
         CheckPannelPublicFromMenu();
+        CheckPanelKeyboardOnOff();
+
 
 
     }
@@ -43,7 +46,23 @@ public class MenuOption : MonoBehaviour
     public void Update()
     {
         CheckMuteMusic();
-        CheckPanelKeyboardOnOff();
+
+
+
+
+    }
+
+    public void CheckLanguage()
+    {
+        if (MainMenu.Language == "Thai")
+        {
+            Lean.Localization.LeanLocalization.SetCurrentLanguageAll("Thai");
+        }
+        else if (MainMenu.Language == "English")
+        {
+            Lean.Localization.LeanLocalization.SetCurrentLanguageAll("English");
+        }
+
 
 
     }
@@ -124,13 +143,13 @@ public class MenuOption : MonoBehaviour
 
     void CheckPanelKeyboardOnOff()
     {
-        if (!PanelDisplay.isOn)
+        if (PanelDisplay.isOn)
         {
-            IsPanel = false;
+            IsPanel = true;
         }
         else
         {
-            IsPanel = true;
+            IsPanel = false;
         }
 
 
@@ -138,7 +157,7 @@ public class MenuOption : MonoBehaviour
 
     void CheckPannelPublicFromMenu()
     {
-        if (!Menu.IsPanelReturn) PanelDisplay.isOn = false;
-        else PanelDisplay.isOn = true;
+        if (Menu.IsPanelReturn) PanelDisplay.isOn = true;
+        else PanelDisplay.isOn = false;
     }
 }
