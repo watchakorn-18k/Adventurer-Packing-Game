@@ -6,7 +6,7 @@ using System;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] int CountDownStart = 120;
+    public static int CountDownStart = 400;
     [SerializeField] Text TimerText;
     TimeSpan timeSpan;
     [SerializeField] GameObject gameOver;
@@ -51,6 +51,7 @@ public class Timer : MonoBehaviour
 
         CountDownStart--;
         Invoke("CountDownTimer", 1.0f);
+        // Debug.Log(CountDownStart);
 
     }
 

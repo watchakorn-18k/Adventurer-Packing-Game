@@ -8,6 +8,9 @@ https://user-images.githubusercontent.com/74919942/148860542-e1c6ec9b-c2ea-4d53-
 
 # CHANGE LOG:
 
+## 17-01-2022:
+#### [✅]: # แก้ไขหลังจากทำภารกิจสำเร็จให้แสดงเวลาที่ทำได้ Fixed after completing a mission to show the time it was done
+
 ## 14-01-2022:
 #### [✅]: # อัปเดตเพิ่มการแปลเป็นภาษาท้องถิ่น Update Localization
 ## 11-01-2022:

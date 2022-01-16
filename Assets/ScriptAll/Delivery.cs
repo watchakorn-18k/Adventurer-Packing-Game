@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System;
 
 public class Delivery : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Delivery : MonoBehaviour
     [SerializeField] GameObject UiFinishBlack;
 
     [SerializeField] Text TimerInGame;
+
+    TimeSpan TimeSpan;
 
 
     public bool isFullPlaceAll;
@@ -202,7 +205,10 @@ public class Delivery : MonoBehaviour
             ScorePackageMenu = GameObject.Find("ScorePackageMenu").GetComponent<Text>();
             ScorePackageMenu.text = ScorePackage.text;
             TimerFinish = GameObject.Find("TimerFinish").GetComponent<Text>();
-            TimerFinish.text = TimerInGame.text;
+            // TimerFinish.text = TimerInGame.text;
+            TimeSpan = TimeSpan.FromSeconds(Timer.CountDownStart - 400f);
+            TimerFinish.text = $"{String.Format(@"{0:mm\:ss}", TimeSpan)}";
+
             // TimerInGame
         }
 
