@@ -69,6 +69,7 @@
      <None Include="Assets\Resources\SaveScore.txt" />
      <None Include="Assets\Lean\READ ME.txt" />
      <None Include="Assets\Lean\Third-Party Notices.txt" />
+     <None Include="Assets\AddressableAssetsData\link.xml" />
      <None Include="Assets\Resources\SaveName.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.2.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

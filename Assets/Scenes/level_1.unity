@@ -7499,7 +7499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &413712644
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38890,7 +38890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1945910128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39588,8 +39588,8 @@ MonoBehaviour:
   UiFinishBlack: {fileID: 1681775852}
   TimerInGame: {fileID: 682098559}
   isFullPlaceAll: 0
-  MaxPackageBlue: 1
-  MaxPackageBlack: 1
+  MaxPackageBlue: 25
+  MaxPackageBlack: 25
   SoundMain: {fileID: 2028730360}
   SoundPackage: {fileID: 1445107150}
   SoundFinishSendPackage: {fileID: 459265102}

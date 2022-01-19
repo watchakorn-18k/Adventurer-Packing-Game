@@ -20,7 +20,8 @@ public class FinishMenu : MonoBehaviour
     }
     public void QuitGame()
     {
-        SoundClickPlay.Play();
+        Time.timeScale = 1f;
+        SoundClickPlay.Play();   
         Application.Quit();
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CheckScene : MonoBehaviour
 {
+    public AudioSource SoundPlay;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +17,10 @@ public class CheckScene : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundPlay.Play();
             if (PlayerPrefs.GetString("SaveName") == "")
             {
+                
                 Application.LoadLevel("Name");
             }
             else
@@ -42,5 +45,9 @@ public class CheckScene : MonoBehaviour
         {
             Application.LoadLevel("Menu");
         }
+    }
+        public void PlaySoundClick()
+    {
+        SoundPlay.Play();
     }
 }

@@ -32,7 +32,9 @@ public class GameOver : MonoBehaviour
     }
     public void QuitGame()
     {
+        Time.timeScale = 1f;
         SoundClickPlay.Play();
+        
         Application.Quit();
     }
 

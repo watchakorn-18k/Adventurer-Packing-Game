@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NextScene : MonoBehaviour
 {
+    public AudioSource SoundPlay;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,7 @@ public class NextScene : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundPlay.Play();
             Application.LoadLevel("SplashScene");
 
         }
@@ -26,5 +28,10 @@ public class NextScene : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         Application.LoadLevel("SplashScene");
+    }
+    
+    public void PlaySoundClick()
+    {
+        SoundPlay.Play();
     }
 }
