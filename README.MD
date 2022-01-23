@@ -5,6 +5,9 @@ Adventurer-Packing-Game</h1>
 
 https://user-images.githubusercontent.com/74919942/148860542-e1c6ec9b-c2ea-4d53-8b39-1eb12a7cb792.mp4
 
+# How To build
+- after build don't forget copy file in Resoures folder in project to Resoures folder build
+
 # CHANGE LOG:
 
 #

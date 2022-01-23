@@ -18,10 +18,17 @@ public class FinishMenu : MonoBehaviour
         SceneManager.LoadScene("Menu");
 
     }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene("Level_2");
+
+    }
+
     public void QuitGame()
     {
         Time.timeScale = 1f;
-        SoundClickPlay.Play();   
+        SoundClickPlay.Play();
         Application.Quit();
     }
 
