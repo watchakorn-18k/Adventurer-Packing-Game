@@ -15,7 +15,7 @@ https://user-images.githubusercontent.com/74919942/148860542-e1c6ec9b-c2ea-4d53-
 
 ## 27-01-2022:
 
-#### [✅]: # อัปเดตด่านที่ 3 และแก้ไขข้อผิดพลาดคะแนนไม่เก็บ
+#### [✅]: # อัปเดตด่านที่ 3 และแก้ไขข้อผิดพลาดคะแนนไม่เก็บตอน Build Update Stage 3 and fixed a bug where scores weren't collected at Build.
 #
 
 ## ✅ ปล่อย alpha 4.0 Release alpha 4.0
