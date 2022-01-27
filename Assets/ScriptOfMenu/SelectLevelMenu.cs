@@ -25,6 +25,10 @@ public class SelectLevelMenu : MonoBehaviour
     {
         SceneManager.LoadScene("level_2");
     }
+    public void LoadLevel_3()
+    {
+        SceneManager.LoadScene("level_3");
+    }
 
     public void BackToMenu()
     {
