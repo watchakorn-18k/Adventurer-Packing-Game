@@ -10,6 +10,12 @@ https://user-images.githubusercontent.com/74919942/148860542-e1c6ec9b-c2ea-4d53-
 
 # CHANGE LOG:
 
+## ✅ ปล่อย alpha 4.0 Release alpha 5.0
+#
+
+## 27-01-2022:
+
+#### [✅]: # อัปเดตด่านที่ 3 และแก้ไขข้อผิดพลาดคะแนนไม่เก็บ
 #
 
 ## ✅ ปล่อย alpha 4.0 Release alpha 4.0

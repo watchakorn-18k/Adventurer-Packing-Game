@@ -21,7 +21,18 @@ public class FinishMenu : MonoBehaviour
 
     public void NextLevel()
     {
+        Delivery.isFullPlaceBlue = false;
+        Delivery.isFullPlaceBlack = false;
         SceneManager.LoadScene("Level_2");
+
+    }
+
+    public void NextLevel1()
+    {
+        Delivery.isFullPlaceBlue = false;
+        Delivery.isFullPlaceBlack = false;
+        SceneManager.LoadScene("Level_2");
+        SceneManager.LoadScene("Level_3");
 
     }
 
