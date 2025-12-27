@@ -4,259 +4,94 @@ using UnityEngine;
 
 public class Driver : MonoBehaviour
 {
-    [SerializeField] int steerSpeed = 300;
-    [SerializeField] int moveSpeed = 10;
+    [Header("Buffalo Movement Settings")]
+    [SerializeField] float moveSpeed = 15f;    // ความเร็วในการวิ่ง
+    [SerializeField] float turnSpeed = 10f;    // ความไวในการหันหน้า (ยิ่งมากยิ่งหันไว)
+    [SerializeField] float slowSpeed = 10f;    // ความเร็วเมื่อชน
+    [SerializeField] float boostSpeed = 25f;    // ตัวแปรสำหรับเก็บความเร็วปัจจุบัน
 
-    public GameObject EffectWalk_1;
-    public GameObject EffectWalk_2;
-
-    public AudioSource SoundWalk;
-
-    public AudioSource SoundSteer;
-
-    public GameObject EffectWalk;
-
-    public GameObject ShowKeyboardSpace;
-    public GameObject ShowKeyboardArrow;
-
+    float currentMoveSpeed;
+    
+    // Animator Component
     Animator animator;
-
-    Rigidbody2D rb;
-
-    bool isFullPlaceBlue;
-    bool isFullPlaceBlack;
-
-    bool IsMoving;
-
-    bool IsSpeedUp;
-    bool IsSteering;
-
-    float steerAmout;
-    float moveAmout;
-
-    float SpeedUp;
-
-    bool touchStart = false;
-
-    Vector2 PointA;
-    Vector2 PointB;
-
-    float speed = 10f;
-
-
-
 
     void Start()
     {
+        currentMoveSpeed = moveSpeed;
         animator = GetComponent<Animator>();
-
     }
 
     void Update()
     {
+        // รับค่าปุ่มกดเป็นทิศทาง (Vector)
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY = Input.GetAxis("Vertical");
 
+        // สร้าง Vector ทิศทางรวม
+        Vector2 moveDirection = new Vector2(moveX, moveY);
+        bool isMoving = moveDirection.sqrMagnitude > 0.01f;
 
-        steerAmout = Input.GetAxis("Horizontal") * steerSpeed * Time.deltaTime;
-        moveAmout = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
-        SpeedUp = Input.GetAxis("Jump") * moveSpeed * Time.deltaTime;
-        transform.Rotate(0, 0, -steerAmout);
-        transform.Translate(0, moveAmout, 0);
-        JotStick();
-        CheckHoldSpace();
-        CheckSoundMove();
-        CheckSoundSteer();
-        isFullPlaceBlue = Delivery.isFullPlaceBlue;
-        isFullPlaceBlack = Delivery.isFullPlaceBlack;
-        CheckMove();
-        ChecKArroKey();
-
-
-
-
-    }
-
-    void JotStick()
-    {
-        if (Input.GetMouseButtonDown(0))
+        // อัปเดต Animation (Animator Controller)
+        if (animator != null)
         {
-            PointA = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
-        }
-        if (Input.GetMouseButton(0))
-        {
-            touchStart = true;
-            PointB = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
-        }
-        else
-        {
-            touchStart = false;
+            animator.SetBool("IsWalk", isMoving);
         }
 
-    }
-
-    private void FixedUpdate()
-    {
-        if (touchStart)
+        // ถ้ามีการกดปุ่ม (มีการเคลื่อนที่)
+        if (isMoving)
         {
-            Vector2 offset = PointB - PointA;
-            Vector2 direction = Vector2.ClampMagnitude(offset, 500.0f);
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
+            // 1. การเคลื่อนที่ (Move)
+            transform.Translate(moveDirection * currentMoveSpeed * Time.deltaTime, Space.World);
 
+            // 2. การหันหน้า (Rotate)
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(0, 0, -targetAngle);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
-        }
-    }
-
-
-
-    void ChecKArroKey()
-    {
-        if (Input.GetKey("up"))
-        {
-            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowUp", true);
-
+            // 3. เพิ่มลูกเล่นการเด้ง (Bobbing/Gallop Effect) เพื่อให้ดูมีความเร็ว
+            // ใช้ Sin wave ปรับ Scale แกน X และ Y สลับกันนิดหน่อย
+            float bobRange = 0.05f; // ความแรงในการยืดหด (น้อยๆ ก็พอ)
+            float bobSpeed = 15f;   // ความถี่ในการเด้ง (วิ่งเร็วก็เด้งรัว)
+            
+            float scaleChange = Mathf.Sin(Time.time * bobSpeed) * bobRange;
+            // ให้แกน Y ยืดออก และ X หดเข้า สลับกัน (Squash & Stretch)
+            transform.localScale = new Vector3(1 + scaleChange, 1 - scaleChange, 1);
         }
         else
         {
-            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowUp", false);
-        }
-
-        if (Input.GetKey("down"))
-        {
-            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowDown", true);
-
-        }
-        else
-        {
-            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowDown", false);
-
-        }
-
-        if (Input.GetKey("left"))
-        {
-            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowLeft", true);
-
-        }
-        else
-        {
-            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowLeft", false);
-
-        }
-
-        if (Input.GetKey("right"))
-        {
-            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowRight", true);
-
-        }
-        else
-        {
-            ShowKeyboardArrow.GetComponent<Animator>().SetBool("ArrowRight", false);
-
+            // คืนค่า Scale ปกติเมื่อหยุดวิ่ง
+             transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, Time.deltaTime * 10f);
         }
     }
 
-    void CheckHoldSpace()
+    // --- ส่วนของการชนและลดความเร็ว (เหมือนเดิม) ---
+    
+    void OnTriggerEnter2D(Collider2D other)
     {
-
-
-        if (SpeedUp > 0)
+        if (other.tag == "Boost")
         {
-            moveSpeed = 20;
-            ShowKeyboardSpace.GetComponent<Animator>().SetBool("IsIdleSpace", true);
-        }
-        else
-        {
-            moveSpeed = 10;
-            ShowKeyboardSpace.GetComponent<Animator>().SetBool("IsIdleSpace", false);
-
-        }
-        if (Input.GetAxis("Jump") > 0.20f) ShowKeyboardSpace.GetComponent<Animator>().SetBool("HoldSpace", true);//IsSpeedUp = true
-        else ShowKeyboardSpace.GetComponent<Animator>().SetBool("HoldSpace", false);
-
-    }
-
-    void CheckSoundMove()
-    {
-        if (Input.GetAxis("Vertical") != 0) IsMoving = true;
-        else IsMoving = false;
-        if (IsMoving && !SoundWalk.isPlaying) SoundWalk.Play();
-        if (!IsMoving) SoundWalk.Stop();
-    }
-
-    void CheckMove()
-    {
-        if (Input.GetAxis("Vertical") != 0)
-        {
-            animator.SetBool("IsWalk", true);
-            EffectWalk_2.SetActive(true);
-            EffectWalk_1.SetActive(true);
-        }
-        else
-        {
-            animator.SetBool("IsWalk", false);
-            EffectWalk_2.SetActive(false);
-            EffectWalk_1.SetActive(false);
+            Debug.Log("Buffalo Boost!");
+            currentMoveSpeed = boostSpeed;
+            CancelInvoke("ResetSpeed");
+            Invoke("ResetSpeed", 2f);
         }
     }
-
-    void CheckSoundSteer()
-    {
-        if (Input.GetAxis("Horizontal") != 0 && Input.GetAxis("Vertical") == 0) IsSteering = true;
-        else IsSteering = false;
-        if (IsSteering && !SoundSteer.isPlaying) SoundSteer.Play();
-        if (!IsSteering) SoundSteer.Stop();
-
-    }
-
-
-
-
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "packages")
+        // ไม่ลดความเร็วถ้าชนกล่องพัสดุหรือจุดส่งของ
+        if (other.gameObject.tag == "packages" || other.gameObject.tag == "customerBlue" || other.gameObject.tag == "customerBlack")
         {
-            moveSpeed = 10;
-
+            return;
         }
 
+        currentMoveSpeed = slowSpeed;
+        CancelInvoke("ResetSpeed");
+        Invoke("ResetSpeed", 1f);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void ResetSpeed()
     {
-        CheckPlaceBlueFull();
-        CheckPlaceBlackFull();
-        // if (other.tag == "customerBlack" || other.tag == "customerBlue")
-        // {
-        //     moveSpeed = 20;
-        // }
-    }
-
-    void CheckPlaceBlueFull()
-    {
-        if (isFullPlaceBlue)
-        {
-            moveSpeed = 10;
-
-        }
-        else
-        {
-            moveSpeed = 10;
-        }
-
-
-    }
-    void CheckPlaceBlackFull()
-    {
-        if (isFullPlaceBlack)
-        {
-            moveSpeed = 10;
-
-        }
-        else
-        {
-            moveSpeed = 10;
-        }
-
-
+        currentMoveSpeed = moveSpeed;
     }
 }
