@@ -2,7 +2,7 @@ name: Deploy WebGL to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'build-game/**'  # Only trigger when build folder changes
 
