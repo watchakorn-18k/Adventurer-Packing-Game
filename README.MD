@@ -5,12 +5,35 @@ Adventurer-Packing-Game</h1>
 
 https://user-images.githubusercontent.com/74919942/148860542-e1c6ec9b-c2ea-4d53-8b39-1eb12a7cb792.mp4
 
+## 🎮 Play Online
+[![Play on GitHub Pages](https://img.shields.io/badge/Play%20Now-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://YOUR_USERNAME.github.io/Adventurer-Packing-Game/)
+
 # How To build
-- after build don't forget copy file in Resoures folder in project to Resoures folder build
+- After build, the game uses PlayerPrefs for saving (WebGL compatible)
+- No need to copy Resources folder anymore!
 
 # CHANGE LOG:
 
-## ✅ ปล่อย alpha 5.0 Release alpha 5.0
+## ✅ Alpha 5.0 Release - 2025-12-28
+
+### ✨ New Features:
+- 🎯 **Manual Throw System**: Click mouse to throw packages anytime
+- 📏 **Aiming Line**: Dashed white line shows throw trajectory
+- 🎮 **Aim Assist**: Forgiving hit detection (1m radius)
+- ❌ **Miss Penalty**: -1 score + destruction animation for missed throws
+- 📦 **Package Stacking**: Delivered boxes stack next to customer areas
+- 👣 **Footprint Effects**: Particle effects when player moves
+- 🚀 **CI/CD Pipeline**: GitHub Actions for auto WebGL build & deploy
+
+### 🔧 Changes:
+- **WebGL Support**: All File I/O replaced with PlayerPrefs
+- Aiming line is always white (no color change)
+
+### 🐛 Bug Fixes:
+- Fixed package teleporting back to player after throw
+- Fixed package disappearing under ground (Z-axis issue)
+- Fixed score not updating after delivery with stacking
+
 #
 
 ## 27-01-2022:

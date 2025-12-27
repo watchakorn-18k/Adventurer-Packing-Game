@@ -43,13 +43,9 @@ public class SaveName : MonoBehaviour
     {
         PlayerPrefs.SetString("SaveName", obj_input.text);
         PlayerPrefs.SetInt("Score", 0);
+        PlayerPrefs.SetInt("CurrentScore", 0); // [WebGL Fix] Reset current score
         PlayerPrefs.Save();
-        string pathScore = Application.dataPath + "/Resources/SaveScore.txt";
-        string pathName = Application.dataPath + "/Resources/SaveName.txt";
-        File.Create(pathScore).Close();
-        File.Create(pathName).Close();
-        File.AppendAllText(pathScore, 0 + "\n");
-
+        // [WebGL Fix] ลบการใช้ File.Create/AppendAllText ออก
     }
 
 
@@ -74,16 +70,13 @@ public class SaveName : MonoBehaviour
 
     string checkName()
     {
-        string path = Application.dataPath + "/Resources/SaveName.txt";
-        string[] lines = System.IO.File.ReadAllLines(path);
-        string NameTxt = lines[lines.Length - 1];
-        return NameTxt;
+        // [WebGL Fix] ใช้ PlayerPrefs แทน File
+        return PlayerPrefs.GetString("SaveName", "Player");
     }
     string checkScore()
     {
-        string path = Application.dataPath + "/Resources/SaveScore.txt";
-        string[] lines = System.IO.File.ReadAllLines(path);
-        string ScoreTxt = lines[lines.Length - 1];
-        return ScoreTxt;
+        // [WebGL Fix] ใช้ PlayerPrefs แทน File
+        int score = PlayerPrefs.GetInt("CurrentScore", 0);
+        return score.ToString();
     }
 }

@@ -2170,10 +2170,10 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: Alpha 4.0 version may have errors. You can contact us at Discord wk-18k#8557
+    Text: Alpha 5.0 version may have errors. You can contact us at Discord wk-18k#8557
     Object: {fileID: 0}
   - Language: Thai
-    Text: "\u0E40\u0E27\u0E2D\u0E23\u0E4C\u0E0A\u0E31\u0E48\u0E19 Alpha 4.0 \u0E2D\u0E32\u0E08\u0E21\u0E35\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14
+    Text: "\u0E40\u0E27\u0E2D\u0E23\u0E4C\u0E0A\u0E31\u0E48\u0E19 Alpha 5.0 \u0E2D\u0E32\u0E08\u0E21\u0E35\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14
       \u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D\u0E21\u0E32\u0E44\u0E14\u0E49\u0E17\u0E35\u0E48
       Discord wk-18k#8557"
     Object: {fileID: 0}
@@ -2249,7 +2249,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Alpha 4.0 version may have errors. You can contact us at Discord wk-18k#8557
+  m_Text: Alpha 5.0 version may have errors. You can contact us at Discord wk-18k#8557
 --- !u!222 &1280654839
 CanvasRenderer:
   m_ObjectHideFlags: 0

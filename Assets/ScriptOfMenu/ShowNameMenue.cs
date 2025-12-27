@@ -27,9 +27,8 @@ public class ShowNameMenue : MonoBehaviour
     }
     string checkScore()
     {
-        string path = Application.dataPath + "/Resources/SaveScore.txt";
-        string[] lines = System.IO.File.ReadAllLines(path);
-        string ScoreTxt = lines[lines.Length - 1];
-        return ScoreTxt;
+        // [WebGL Fix] ใช้ PlayerPrefs แทน File
+        int score = PlayerPrefs.GetInt("CurrentScore", 0);
+        return score.ToString();
     }
 }

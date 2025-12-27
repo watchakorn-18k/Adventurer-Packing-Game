@@ -45,10 +45,9 @@ public class ShowHightScore : MonoBehaviour
     }
     string checkScore()
     {
-        string path = Application.dataPath + "/Resources/SaveScore.txt";
-        string[] lines = System.IO.File.ReadAllLines(path);
-        string ScoreTxt = lines[lines.Length - 1];
-        return ScoreTxt;
+        // [WebGL Fix] ใช้ PlayerPrefs แทน File
+        int score = PlayerPrefs.GetInt("CurrentScore", 0);
+        return score.ToString();
     }
 
     void NewHightScore()
@@ -64,7 +63,8 @@ public class ShowHightScore : MonoBehaviour
 
     void SaveFinalScore()
     {
-        string path = Application.dataPath + "/Resources/SaveFinalScore.txt";
-        File.AppendAllText(path, PlayerPrefs.GetInt("HighScore").ToString() + "\n");
+        // [WebGL Fix] ใช้ PlayerPrefs แทน File I/O
+        // HighScore ถูก save ใน NewHightScore() แล้ว
+        PlayerPrefs.Save();
     }
 }
