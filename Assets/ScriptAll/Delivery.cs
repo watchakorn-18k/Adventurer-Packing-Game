@@ -220,12 +220,20 @@ public class Delivery : MonoBehaviour
         // Visual Package Throw
         if (Cargo != null) 
         {
-             PackageOnCar = GameObject.Find($"{Cargo.name}");
-             if (PackageOnCar != null)
+             // เก็บ Reference ไว้ใช้กับ Coroutine
+             GameObject pkgThrow = GameObject.Find($"{Cargo.name}");
+             
+             // [Fix] ตัดการเชื่อมต่อทันที เพื่อไม่ให้ระบบอื่นตามเจอ
+             PackageOnCar = null; 
+             Cargo = null;
+
+             if (pkgThrow != null)
              {
-                 StartCoroutine(AnimateThrow(PackageOnCar, targetPos));
+                 StartCoroutine(AnimateThrowMiss(pkgThrow, targetPos));
              }
         }
+
+        // Score Penalty (-1)
 
         // Score Penalty (-1)
         AmoutOfPackage -= 1; 
@@ -733,6 +741,98 @@ public class Delivery : MonoBehaviour
         rangeLine.positionCount = 2;
         rangeLine.loop = false;
         rangeObj.SetActive(false);
+    }
+
+    IEnumerator AnimateThrowMiss(GameObject pkg, Vector3 targetPos)
+    {
+        if (pkg == null) yield break;
+
+        // [Fix] ปลด Parent
+        pkg.transform.SetParent(null);
+        
+        // [Fix] ลบ Component ที่อาจจะดึงตำแหน่งกลับ
+        Component[] components = pkg.GetComponents<MonoBehaviour>();
+        foreach (var c in components) { Destroy(c); }
+
+        // ปิด Collider และ Physics
+        Collider2D col = pkg.GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+        Rigidbody2D rb = pkg.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.simulated = false;
+
+        // [Fix] Force Sorting Order High & Force Z
+        SpriteRenderer sr = pkg.GetComponent<SpriteRenderer>();
+        if (sr == null) sr = pkg.GetComponentInChildren<SpriteRenderer>();
+        if (sr != null) sr.sortingOrder = 100;
+
+        Vector3 startPos = pkg.transform.position;
+        targetPos.z = startPos.z; // Force Z match
+        float duration = 0.5f; // เวลาในการลอย
+        float elapsed = 0f;
+
+        // 1. ช่วงลอยกลางอากาศ (Fly) - Parabola
+        while (elapsed < duration)
+        {
+            if (pkg == null) yield break;
+            
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            // Parabola Move
+            Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
+            float arcHeight = 2.0f; 
+            currentPos.y += 4 * arcHeight * t * (1 - t); 
+            currentPos.z = startPos.z; // [Fix] Maintain Z
+            pkg.transform.position = currentPos;
+
+            // Spin
+            pkg.transform.Rotate(0, 0, 360 * Time.deltaTime * 3);
+            yield return null;
+        }
+
+        // 2. ช่วงตกกระแทกและกลิ้ง (Hit Ground & Roll)
+        pkg.transform.position = targetPos; // ถึงพื้นแล้ว
+        
+        float rollDuration = 1.5f; // [Modified] กลิ้งนานขึ้นหน่อย (1.5 วิ)
+        float rollElapsed = 0f;
+        
+        // สุ่มทิศทางกลิ้งเล็กน้อย
+        Vector3 rollDir = (targetPos - startPos).normalized; 
+
+        // เก็บขนาดตอนตกถึงพื้น (เผื่อมีการ Scale)
+        Vector3 groundScale = pkg.transform.localScale;
+
+        while (rollElapsed < rollDuration)
+        {
+            if (pkg == null) yield break;
+            rollElapsed += Time.deltaTime;
+            float t = rollElapsed / rollDuration; 
+
+            // กลิ้งไปข้างหน้า (EaseOut - เร็วแล้วค่อยๆ หยุด)
+            float speed = 2.0f * (1 - t); 
+            Vector3 nextPos = pkg.transform.position + (rollDir * speed * Time.deltaTime);
+            nextPos.z = startPos.z; // [Fix] Maintain Z
+            pkg.transform.position = nextPos;
+
+            // หมุนติ้วๆ
+            pkg.transform.Rotate(0, 0, -360 * speed * Time.deltaTime);
+
+            // Fade Out (ให้เริ่มจางเมื่อผ่านไปครึ่งทางแล้ว)
+            if (t > 0.5f && sr != null)
+            {
+                float fadeT = (t - 0.5f) / 0.5f; // 0 -> 1 ในครึ่งหลัง
+                Color c = sr.color;
+                c.a = Mathf.Lerp(1f, 0f, fadeT); 
+                sr.color = c;
+                
+                // ย่อขนาดลงด้วยนิดหน่อยตอนจะหายเพื่อความสมูท
+                pkg.transform.localScale = Vector3.Lerp(groundScale, Vector3.zero, fadeT);
+            }
+
+            yield return null;
+        }
+
+        Destroy(pkg);
     }
 
 }
