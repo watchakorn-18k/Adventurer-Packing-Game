@@ -57,8 +57,13 @@ public class Driver : MonoBehaviour
         }
     }
 
+    [Header("Cargo Settings")]
+    [SerializeField] Transform cargoContainer; // ลาก Object ที่เป็น Parent ของกล่องทั้งหมดมาใส่
+    float cargoWobbleAmount = 0f;
+
     void Update()
     {
+        // ... (Old Update Code) ...
         // รับค่าปุ่มกดเป็นทิศทาง (Vector)
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
@@ -97,19 +102,44 @@ public class Driver : MonoBehaviour
             Quaternion targetRotation = Quaternion.Euler(0, 0, -targetAngle);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
-            // 3. เพิ่มลูกเล่นการเด้ง (Bobbing/Gallop Effect) เพื่อให้ดูมีความเร็ว
-            // ใช้ Sin wave ปรับ Scale แกน X และ Y สลับกันนิดหน่อย
-            float bobRange = 0.05f; // ความแรงในการยืดหด (น้อยๆ ก็พอ)
-            float bobSpeed = 15f;   // ความถี่ในการเด้ง (วิ่งเร็วก็เด้งรัว)
+            // 3. เพิ่มลูกเล่นการเด้ง (Bobbing/Gallop Effect)
+            float bobRange = 0.05f; 
+            float bobSpeed = 15f;   
             
             float scaleChange = Mathf.Sin(Time.time * bobSpeed) * bobRange;
-            // ให้แกน Y ยืดออก และ X หดเข้า สลับกัน (Squash & Stretch)
             transform.localScale = new Vector3(1 + scaleChange, 1 - scaleChange, 1);
         }
         else
         {
-            // คืนค่า Scale ปกติเมื่อหยุดวิ่ง
              transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, Time.deltaTime * 10f);
+        }
+
+        // --- Cargo Wobble Logic (กล่องโยกเยก) ---
+        // หาเป้าหมายที่จะโยก (Visual Cargo หรือ กล่องที่เก็บมา)
+        Transform targetCargo = cargoContainer;
+        
+        // ถ้าไม่มี Visual Cargo ให้ลองไปหาจาก Delivery Script (กล่องที่เก็บมา)
+        if (targetCargo == null)
+        {
+            Delivery delivery = GetComponent<Delivery>();
+            if (delivery != null && delivery.PackageOnCar != null)
+            {
+                targetCargo = delivery.PackageOnCar.transform;
+            }
+        }
+
+        if (targetCargo != null)
+        {
+            // คำนวณแรงเหวี่ยง: ถ้าเลี้ยวซ้าย กล่องจะเอียงขวา (Inertia)
+            // เลี้ยวแรงแค่ไหน ขึ้นอยู่กับ input แนวนอน (moveX)
+            float targetWobble = -moveX * 15f; // เอียงสูงสุด 15 องศา
+            
+            // ทำให้กล่องค่อยๆ เอียงไปหาองศาเป้าหมาย (Lerp)
+            cargoWobbleAmount = Mathf.Lerp(cargoWobbleAmount, targetWobble, Time.deltaTime * 5f);
+            
+            // หมุนเฉพาะแกน Z โดยอิงจาก Local Rotation เดิม
+            // หมายเหตุ: ใช้ localRotation ถ้าเป็นลูก แต่ถ้ากล่องแยกอาจจะต้องดู Parent
+            targetCargo.localRotation = Quaternion.Euler(0, 0, cargoWobbleAmount);
         }
     }
 
@@ -135,6 +165,7 @@ public class Driver : MonoBehaviour
         }
 
         currentMoveSpeed = slowSpeed;
+        
         CancelInvoke("ResetSpeed");
         Invoke("ResetSpeed", 1f);
     }

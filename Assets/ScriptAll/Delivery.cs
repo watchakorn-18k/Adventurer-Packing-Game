@@ -64,7 +64,7 @@ public class Delivery : MonoBehaviour
     Text AmoutBlack;
     Text ScoreAll;
 
-    GameObject PackageOnCar;
+    public GameObject PackageOnCar;
     GameObject CustomerPlace;
 
 
@@ -240,6 +240,9 @@ public class Delivery : MonoBehaviour
                 AmoutOfPackage += 1;
                 SaveScoreTotxt();
 
+                // Show Floating Text (+1!)
+                ShowFloatingText(CustomerPlace.transform.position, "+1!", Color.cyan);
+
                 TxtReqBlue.text = $"{+AmoutOfPlaceBlue}/{MaxPackageBlue}";
                 AmoutBlue.text = AmoutOfPlaceBlue.ToString();
                 ScorePackage.text = AmoutOfPackage.ToString();
@@ -268,6 +271,9 @@ public class Delivery : MonoBehaviour
                 AmoutOfPackage += 1;
                 SaveScoreTotxt();
 
+
+                // Show Floating Text (+1!)
+                ShowFloatingText(CustomerPlace.transform.position, "+1!", Color.red);
 
                 TxtReqBlack.text = $"{+AmoutOfPlaceBlack}/{MaxPackageBlack}";
                 AmoutBlack.text = AmoutOfPlaceBlack.ToString();
@@ -469,6 +475,66 @@ public class Delivery : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    void ShowFloatingText(Vector3 position, string text, Color color)
+    {
+        GameObject go = new GameObject("FloatingText");
+        go.transform.position = position + new Vector3(0, 1.5f, -2f);
+        
+        // Load Game Font (SP-Kangfu)
+        Font gameFont = Resources.Load<Font>("Font/SP-Kangfu"); // Try loading if in Resources
+        // If not in Resources, we'll try to find it from another object, but for now let's use Arial or fallback.
+        // Actually, best way is to expose a public Font variable.
+        // But since user asked to edit this function, I will add a text mesh component setup.
+        
+        // Setup Main Text
+        SetupTextMesh(go, text, color, 180, 20, gameFont); // Increased size to 180
+        
+        // Create Outline (Simulated by 4 black texts behind)
+        float offset = 0.1f;
+        createOutlinePart(go, text, new Vector3(-offset, -offset, 0.1f), gameFont);
+        createOutlinePart(go, text, new Vector3( offset, -offset, 0.1f), gameFont);
+        createOutlinePart(go, text, new Vector3(-offset,  offset, 0.1f), gameFont);
+        createOutlinePart(go, text, new Vector3( offset,  offset, 0.1f), gameFont);
+
+        // Add Logic
+        go.AddComponent<FloatingText>();
+        go.transform.localScale = Vector3.one;
+    }
+
+    void createOutlinePart(GameObject parent, string text, Vector3 localOffset, Font font)
+    {
+        GameObject outline = new GameObject("Outline");
+        outline.transform.SetParent(parent.transform);
+        outline.transform.localPosition = localOffset;
+        outline.transform.localScale = Vector3.one;
+        SetupTextMesh(outline, text, Color.black, 180, 20, font);
+    }
+
+    void SetupTextMesh(GameObject go, string text, Color color, int fontSize, int sortOrder, Font font)
+    {
+        TextMesh tm = go.AddComponent<TextMesh>();
+        tm.text = text;
+        tm.color = color;
+        tm.fontSize = fontSize;
+        tm.characterSize = 0.1f;
+        tm.anchor = TextAnchor.MiddleCenter;
+        tm.alignment = TextAlignment.Center;
+        if (font != null) tm.font = font;
+
+        // Renderer
+        MeshRenderer rn = go.GetComponent<MeshRenderer>();
+        if (rn != null) 
+        {
+            rn.sortingOrder = sortOrder; // Main text = 20, Outline will inherit parent but we actually need to be careful.
+            // Let's set Sorting Order explicitly.
+            if (color == Color.black) rn.sortingOrder = sortOrder - 1; // Behind
+            else rn.sortingOrder = sortOrder;
+            
+            // Fix Font Material issue (TextMesh needs Font Material)
+            if (font != null) rn.material = font.material;
+        }
     }
 
 }
