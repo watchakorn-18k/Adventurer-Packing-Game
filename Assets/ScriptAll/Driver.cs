@@ -19,12 +19,22 @@ public class Driver : MonoBehaviour
     [SerializeField] ParticleSystem dustPrefab; // ลากไฟล์ Prefab 'EffectWalk' จาก Project มาใส่ตรงนี้
     ParticleSystem currentDust;
 
+    ParticleSystem currentFootprints;
+
     void Start()
     {
         currentMoveSpeed = moveSpeed;
         animator = GetComponent<Animator>();
 
         // Setup Dust Effect
+        SetupDust();
+        
+        // Setup Footprints
+        SetupFootprints();
+    }
+
+    void SetupDust()
+    {
         if (dustPrefab != null)
         {
             // สร้าง Effect ขึ้นมาเป็นลูกของตัวละคร
@@ -52,14 +62,84 @@ public class Driver : MonoBehaviour
 
             var emission = currentDust.emission;
             emission.rateOverTime = 20f; // ออกมาเยอะหน่อยจะได้ดูต่อเนื่อง
-
-
         }
+    }
+
+    void SetupFootprints()
+    {
+        GameObject fpObj = new GameObject("Footprints");
+        fpObj.transform.SetParent(transform);
+        fpObj.transform.localPosition = new Vector3(0, -0.5f, 0); // ตำแหน่งเท้า
+
+        currentFootprints = fpObj.AddComponent<ParticleSystem>();
+        var main = currentFootprints.main;
+        main.simulationSpace = ParticleSystemSimulationSpace.World; // อยู่กับที่พื้น
+        main.startLifetime = 3f; // อยู่นาน 3 วินาที
+        main.startSpeed = 0f;    // ไม่ขยับ
+        main.startSize = 0.6f;   // เพิ่มขนาดให้เห็นชัดขึ้น
+        main.startRotation = 0f;
+        main.maxParticles = 200;
+        main.loop = true;
+        
+        // Color (สุ่มความเข้ม-จาง)
+        // ใช้ 2 สีที่มี Alpha ต่างกัน (0.3 ถึง 0.8)
+        Color minColor = new Color(0.2f, 0.15f, 0.1f, 0.3f);
+        Color maxColor = new Color(0.2f, 0.15f, 0.1f, 0.8f);
+        main.startColor = new ParticleSystem.MinMaxGradient(minColor, maxColor);
+
+        // Emission: ปิด Auto แล้วใช้ Manual Emit ใน Update แทน
+        var emission = currentFootprints.emission;
+        emission.rateOverTime = 0;
+        emission.rateOverDistance = 0; 
+
+        // Shape (ปล่อยแบบสุ่มซ้าย-ขวา กว้างๆ)
+        var shape = currentFootprints.shape;
+        shape.shapeType = ParticleSystemShapeType.Box; 
+        shape.scale = new Vector3(0.6f, 0.0f, 0f); // กว้าง 0.6 (ระยะห่างระหว่างขาซ้ายขวา)
+
+        // No Rotation (จุดกลมๆ ไม่ต้องหมุน)
+        main.startRotation = 0f;
+        main.startSize = 0.25f; // จุดเล็กๆ
+
+        // Renderer
+        var renderer = currentFootprints.GetComponent<ParticleSystemRenderer>();
+        renderer.renderMode = ParticleSystemRenderMode.Billboard; // [Fix] ใช้ Billboard ปกติสำหรับ 2D
+        
+        // Sorting Order Fix: ต้องอยู่เหนือพื้นแต่อยู่หลังตัวละคร
+        var playerRenderer = GetComponent<SpriteRenderer>();
+        if (playerRenderer != null)
+        {
+            renderer.sortingLayerID = playerRenderer.sortingLayerID;
+            renderer.sortingOrder = playerRenderer.sortingOrder - 2; // ลบ 2 เพื่อให้อยู่หลังฝุ่น (-1) อีกที
+        }
+        else
+        {
+            renderer.sortingOrder = 1; // Default fallback (เผื่อพื้นเป็น 0)
+        }
+        
+        // Generate Texture
+        Texture2D tex = new Texture2D(32, 32);
+        for (int y = 0; y < 32; y++)
+        {
+            for (int x = 0; x < 32; x++)
+            {
+                float dist = Vector2.Distance(new Vector2(x,y), new Vector2(16,16));
+                if (dist < 14) tex.SetPixel(x, y, Color.white);
+                else tex.SetPixel(x, y, Color.clear);
+            }
+        }
+        tex.Apply();
+        Material mat = new Material(Shader.Find("Sprites/Default"));
+        mat.mainTexture = tex;
+        renderer.material = mat;
     }
 
     [Header("Cargo Settings")]
     [SerializeField] Transform cargoContainer; // ลาก Object ที่เป็น Parent ของกล่องทั้งหมดมาใส่
     float cargoWobbleAmount = 0f;
+
+    // Footprint Logic
+    Vector3 lastFootprintPos;
 
     void Update()
     {
@@ -88,6 +168,19 @@ public class Driver : MonoBehaviour
             else if (!isMoving && currentDust.isPlaying)
             {
                 currentDust.Stop();
+            }
+        }
+
+        // อัปเดต รอยเท้า (Footprints) - Manual Trigger
+        if (currentFootprints != null && isMoving)
+        {
+            // คำนวณระยะทางที่เดินมาจากรอยเท้าล่าสุด
+            float dist = Vector3.Distance(transform.position, lastFootprintPos);
+            if (dist > 1.5f) // ทุกๆ 1.5 เมตร (ลดความถี่ลง 3 เท่า)
+            {
+                // ปล่อย 2 รอยพร้อมกัน (ซ้าย-ขวา)
+                currentFootprints.Emit(2);
+                lastFootprintPos = transform.position;
             }
         }
 

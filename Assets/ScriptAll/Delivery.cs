@@ -42,6 +42,7 @@ public class Delivery : MonoBehaviour
 
     // Navigator Variables
     GameObject navArrow;
+    LineRenderer rangeLine; // เส้นประวงกลม
     List<GameObject> blueCustomers = new List<GameObject>();
     List<GameObject> blackCustomers = new List<GameObject>();
 
@@ -102,6 +103,7 @@ public class Delivery : MonoBehaviour
         blueCustomers.AddRange(GameObject.FindGameObjectsWithTag("customerBlue"));
         blackCustomers.AddRange(GameObject.FindGameObjectsWithTag("customerBlack"));
         CreateNavigatorArrow();
+        SetupRangeIndicator(); // สร้างเส้นประวงกลม
     }
 
     void Update()
@@ -111,19 +113,88 @@ public class Delivery : MonoBehaviour
         CheckPlaceAll();
         CheckNewHightScore();
         UpdateNavigator();
-        // PlayerPrefs.DeleteAll();
+        CheckManualThrow(); // [New] เช็คการคลิกขว้างของ
+        UpdateAimingLine(); // [New] เส้นเล็งเมาส์
+    }
 
+    // [New] อัปเดตเส้น Dash Line ตามเมาส์
+    void UpdateAimingLine()
+    {
+        if (rangeLine == null) return;
 
+        if (!hasPackage)
+        {
+            rangeLine.gameObject.SetActive(false);
+            return;
+        }
 
+        rangeLine.gameObject.SetActive(true);
 
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0; // Ensure 2D
+        
+        Vector3 startPos = transform.position;
+        Vector3 dir = (mousePos - startPos).normalized;
+        float dist = Vector3.Distance(startPos, mousePos);
 
+        // Limit distance to 12m
+        if (dist > 12f)
+        {
+            dist = 12f;
+            mousePos = startPos + (dir * dist);
+        }
 
+        rangeLine.SetPosition(0, startPos);
+        rangeLine.SetPosition(1, mousePos);
 
+        // Check Target for Color Change
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        bool aimingAtCustomer = false;
+        
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("customerBlue") || hit.collider.CompareTag("customerBlack"))
+            {
+                // Check distance again just to be sure valid delivery logic holds
+                if (Vector2.Distance(startPos, hit.collider.transform.position) <= 12f)
+                {
+                    aimingAtCustomer = true;
+                }
+            }
+        }
 
+        if (aimingAtCustomer)
+        {
+            rangeLine.startColor = Color.green;
+            rangeLine.endColor = Color.green;
+        }
+        else
+        {
+            rangeLine.startColor = Color.white;
+            rangeLine.endColor = new Color(1, 1, 1, 0.5f);
+        }
+    }
 
-
-
-
+    // [New] ฟังก์ชันเช็คการคลิกเมาส์เพื่อโยนของ
+    void CheckManualThrow()
+    {
+        if (Input.GetMouseButtonDown(0) && hasPackage)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+            
+            // ยิง Raycast ไปที่ตำแหน่งเมาส์
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            if (hit.collider != null)
+            {
+                // เช็คระยะห่าง (เพิ่มระยะเป็น 12 เมตร)
+                float dist = Vector2.Distance(transform.position, hit.collider.transform.position);
+                if (dist <= 12f)
+                {
+                    TryDeliver(hit.collider.gameObject);
+                }
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -148,53 +219,51 @@ public class Delivery : MonoBehaviour
         {
             CollisionBox.Play();
         }
-
-
-
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        TryDeliver(other.gameObject);
+    }
 
-        if (other.tag == "customerBlue" && hasPackage && AmoutOfPlaceBlue <= MaxPackageBlue - 1 && AmoutOfPackageInPlayer == 1)
+    // [New] ย้าย Logic การส่งของมาไว้ตรงนี้ เพื่อให้เรียกใช้ได้ทั้งจาก Trigger และ Mouse Click
+    void TryDeliver(GameObject customer)
+    {
+        if (!hasPackage || AmoutOfPackageInPlayer != 1) return;
+
+        if (customer.tag == "customerBlue" && AmoutOfPlaceBlue <= MaxPackageBlue - 1)
         {
             ColorOfPlace = "Blue";
-            CustomerPlace = GameObject.Find(other.gameObject.name);
-            hasPackage = false;
-            isDelivering = true;
-            AmoutOfPackageInPlayer -= 1;
-
-
-            //ลบ object กล่อง ที่อยู่บนรถ
-            PackageOnCar = GameObject.Find($"{Cargo.name}");
-            // Destroy(PackageOnCar, ระยะเวลาทำลาย); // [Modified] เปลี่ยนเป็นอนิเมชั่นโยน
-            StartCoroutine(AnimateThrow(PackageOnCar, CustomerPlace.transform.position));
-            SoundFinishSendPackage.Play();
-
-
+            CustomerPlace = customer;
+            ProcessDelivery();
         }
-
-
-
-        if (other.tag == "customerBlack" && hasPackage && AmoutOfPlaceBlack <= MaxPackageBlack - 1 && AmoutOfPackageInPlayer == 1)
+        else if (customer.tag == "customerBlack" && AmoutOfPlaceBlack <= MaxPackageBlack - 1)
         {
             ColorOfPlace = "Black";
-            CustomerPlace = GameObject.Find(other.gameObject.name);
-            hasPackage = false;
-            isDelivering = true;
-            AmoutOfPackageInPlayer -= 1;
-
-
-            //ลบ object กล่อง ที่อยู่บนรถ
-            PackageOnCar = GameObject.Find($"{Cargo.name}");
-            // Destroy(PackageOnCar, ระยะเวลาทำลาย); // [Modified] เปลี่ยนเป็นอนิเมชั่นโยน
-            StartCoroutine(AnimateThrow(PackageOnCar, CustomerPlace.transform.position));
-            SoundFinishSendPackage.Play();
+            CustomerPlace = customer;
+            ProcessDelivery();
         }
+    }
 
+    void ProcessDelivery()
+    {
+        hasPackage = false;
+        isDelivering = true;
+        AmoutOfPackageInPlayer -= 1;
 
-
-
+        //ลบ object กล่อง ที่อยู่บนรถ
+        if (Cargo != null) 
+        {
+             PackageOnCar = GameObject.Find($"{Cargo.name}");
+             // ถ้าหาไม่เจอ ให้ลองหาลูกของ CargoContainer (จาก Driver) หรือใช้วิธีอื่น
+             // แต่ code เดิมใช้ GameObject.Find(Cargo.name) ซึ่งเสี่ยงถ้า name ซ้ำ แต่เราจะคง Logic เดิมไว้
+             if (PackageOnCar != null)
+             {
+                 StartCoroutine(AnimateThrow(PackageOnCar, CustomerPlace.transform.position));
+             }
+        }
+        
+        SoundFinishSendPackage.Play();
     }
 
     void ShowFinish()
@@ -582,6 +651,47 @@ public class Delivery : MonoBehaviour
 
         // ทำลายเมื่อถึงเป้าหมาย
         Destroy(pkg);
+    }
+
+    void SetupRangeIndicator()
+    {
+        GameObject rangeObj = new GameObject("RangeIndicator");
+        rangeObj.transform.SetParent(transform);
+        rangeObj.transform.localPosition = Vector3.zero;
+
+        rangeLine = rangeObj.AddComponent<LineRenderer>();
+        rangeLine.useWorldSpace = false;
+        rangeLine.loop = true;
+        rangeLine.positionCount = 50;
+        rangeLine.startWidth = 0.05f;
+        rangeLine.endWidth = 0.05f;
+        
+        // Procedural Dashed Texture (32px: 16 white, 16 clear)
+        Texture2D tex = new Texture2D(32, 1);
+        tex.filterMode = FilterMode.Point;
+        for (int i = 0; i < 32; i++) 
+        {
+             if (i < 16) tex.SetPixel(i, 0, Color.white);
+             else tex.SetPixel(i, 0, Color.clear);
+        }
+        tex.Apply();
+        
+        // Material setup
+        Material mat = new Material(Shader.Find("Sprites/Default"));
+        mat.mainTexture = tex;
+        rangeLine.material = mat;
+        
+        // Tile texture to create dashes
+        rangeLine.textureMode = LineTextureMode.Tile; 
+        rangeLine.material.mainTextureScale = new Vector2(5f, 1f); // Adjust tiling
+        
+        rangeLine.startColor = new Color(1, 1, 1, 0.5f);
+        rangeLine.endColor = new Color(1, 1, 1, 0.5f);
+
+        // Configure as simple line (Start -> End)
+        rangeLine.positionCount = 2;
+        rangeLine.loop = false;
+        rangeObj.SetActive(false);
     }
 
 }
