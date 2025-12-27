@@ -15,10 +15,46 @@ public class Driver : MonoBehaviour
     // Animator Component
     Animator animator;
 
+    [Header("Effects")]
+    [SerializeField] ParticleSystem dustPrefab; // ลากไฟล์ Prefab 'EffectWalk' จาก Project มาใส่ตรงนี้
+    ParticleSystem currentDust;
+
     void Start()
     {
         currentMoveSpeed = moveSpeed;
         animator = GetComponent<Animator>();
+
+        // Setup Dust Effect
+        if (dustPrefab != null)
+        {
+            // สร้าง Effect ขึ้นมาเป็นลูกของตัวละคร
+            currentDust = Instantiate(dustPrefab, transform.position, Quaternion.identity);
+            currentDust.transform.SetParent(transform);
+            currentDust.transform.localPosition = new Vector3(0, -0.8f, 0); // ขยับไปไว้ด้านหลัง (หาง/เท้าคู่หลัง)
+            currentDust.transform.localScale = Vector3.one;
+
+            // ตั้งค่า Sorting Order ให้แสดงผลถูกต้อง
+            var dustRenderer = currentDust.GetComponent<Renderer>();
+            var playerRenderer = GetComponent<SpriteRenderer>();
+            if (dustRenderer != null && playerRenderer != null)
+            {
+                dustRenderer.sortingLayerID = playerRenderer.sortingLayerID;
+                dustRenderer.sortingOrder = playerRenderer.sortingOrder - 1; 
+            }
+
+            // ปรับแต่ง Particle System ให้ดูเป็นฝุ่นที่ทิ้งไว้ข้างหลัง (Trail)
+            var main = currentDust.main;
+            main.simulationSpace = ParticleSystemSimulationSpace.World; // สำคัญ: ให้ฝุ่นอยู่ที่เดิม ไม่ตามตัวละครไป
+            main.startLifetime = 0.5f; // หายไปเร็วขึ้น (0.5 วินาที)
+            main.startSpeed = 0.2f;    // ไม่ต้องพุ่งไปไหนไกล
+            main.startSize = new ParticleSystem.MinMaxCurve(0.3f, 0.6f); // สุ่มขนาด
+            main.maxParticles = 50;
+
+            var emission = currentDust.emission;
+            emission.rateOverTime = 20f; // ออกมาเยอะหน่อยจะได้ดูต่อเนื่อง
+
+
+        }
     }
 
     void Update()
@@ -35,6 +71,19 @@ public class Driver : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("IsWalk", isMoving);
+        }
+
+        // อัปเดต Effect ฝุ่น (Dust Particles)
+        if (currentDust != null)
+        {
+            if (isMoving && !currentDust.isPlaying)
+            {
+                currentDust.Play();
+            }
+            else if (!isMoving && currentDust.isPlaying)
+            {
+                currentDust.Stop();
+            }
         }
 
         // ถ้ามีการกดปุ่ม (มีการเคลื่อนที่)
