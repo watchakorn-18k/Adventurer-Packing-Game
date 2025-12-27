@@ -167,7 +167,8 @@ public class Delivery : MonoBehaviour
 
             //ลบ object กล่อง ที่อยู่บนรถ
             PackageOnCar = GameObject.Find($"{Cargo.name}");
-            Destroy(PackageOnCar, ระยะเวลาทำลาย);
+            // Destroy(PackageOnCar, ระยะเวลาทำลาย); // [Modified] เปลี่ยนเป็นอนิเมชั่นโยน
+            StartCoroutine(AnimateThrow(PackageOnCar, CustomerPlace.transform.position));
             SoundFinishSendPackage.Play();
 
 
@@ -186,7 +187,8 @@ public class Delivery : MonoBehaviour
 
             //ลบ object กล่อง ที่อยู่บนรถ
             PackageOnCar = GameObject.Find($"{Cargo.name}");
-            Destroy(PackageOnCar, ระยะเวลาทำลาย);
+            // Destroy(PackageOnCar, ระยะเวลาทำลาย); // [Modified] เปลี่ยนเป็นอนิเมชั่นโยน
+            StartCoroutine(AnimateThrow(PackageOnCar, CustomerPlace.transform.position));
             SoundFinishSendPackage.Play();
         }
 
@@ -227,11 +229,13 @@ public class Delivery : MonoBehaviour
     {
         if (ColorOfPlace == "Blue")
         {
-            // เช็คถ้าของยังไม่ถูกทำลายจะให้รถไปอยู่ในตำแหน่ง CustomPlace
+            // [Modified] ไม่ล็อกขาผู้เล่นแล้ว ให้โยนของแล้วขับไปต่อได้เลย (Drive-by)
+            /*
             if (isDelivering && PackageOnCar != null)
             {
                 gameObject.transform.position = new Vector3(CustomerPlace.transform.position.x, CustomerPlace.transform.position.y, -5f);
             }
+            */
 
             // เช็คถ้าของถูกทำลายแล้ว
             if (isDelivering && PackageOnCar == null)
@@ -258,11 +262,13 @@ public class Delivery : MonoBehaviour
         }
         if (ColorOfPlace == "Black")
         {
-            // เช็คถ้าของยังไม่ถูกทำลายจะให้รถไปอยู่ในตำแหน่ง CustomPlace
+            // [Modified] ไม่ล็อกขาผู้เล่นแล้ว
+            /*
             if (isDelivering && PackageOnCar != null)
             {
                 gameObject.transform.position = new Vector3(CustomerPlace.transform.position.x, CustomerPlace.transform.position.y, -5f);
             }
+            */
 
             // เช็คถ้าของถูกทำลายแล้ว
             if (isDelivering && PackageOnCar == null)
@@ -535,6 +541,47 @@ public class Delivery : MonoBehaviour
             // Fix Font Material issue (TextMesh needs Font Material)
             if (font != null) rn.material = font.material;
         }
+    }
+
+    IEnumerator AnimateThrow(GameObject pkg, Vector3 targetPos)
+    {
+        if (pkg == null) yield break;
+
+        // แยกกล่องออกจากตัวรถ (จะได้บินอิสระ)
+        pkg.transform.SetParent(null);
+
+        Vector3 startPos = pkg.transform.position;
+        float duration = 0.5f; // ใช้เวลาบิน 0.5 วินาที
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            if (pkg == null) yield break;
+            
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            // คำนวณตำแหน่ง Lerp แบบเส้นตรง
+            Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
+
+            // เพิ่มความโค้ง (Parabola) แกน Y
+            // สูตร: 4 * height * t * (1-t) จะได้รูปภูเขา (0 -> 1 -> 0)
+            float arcHeight = 2.0f;
+            currentPos.y += 4 * arcHeight * t * (1 - t);
+
+            pkg.transform.position = currentPos;
+
+            // หมุนติ้วๆ
+            pkg.transform.Rotate(0, 0, 360 * Time.deltaTime * 2);
+
+            // ย่อขนาดตอนใกล้ถึง
+            pkg.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
+
+            yield return null;
+        }
+
+        // ทำลายเมื่อถึงเป้าหมาย
+        Destroy(pkg);
     }
 
 }
