@@ -1,12 +1,15 @@
 <h1 align="center">
 Adventurer-Packing-Game</h1>
+
+[![Play on GitHub Pages](https://img.shields.io/badge/Play%20Now-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://watchakorn-18k.github.io/Adventurer-Packing-Game/)
+
 <p align="center"><img src="ScreenImage/alpha 4.0.png">
 </p>
 
 https://user-images.githubusercontent.com/74919942/148860542-e1c6ec9b-c2ea-4d53-8b39-1eb12a7cb792.mp4
 
 ## 🎮 Play Online
-[![Play on GitHub Pages](https://img.shields.io/badge/Play%20Now-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://YOUR_USERNAME.github.io/Adventurer-Packing-Game/)
+[![Play on GitHub Pages](https://img.shields.io/badge/Play%20Now-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://watchakorn-18k.github.io/Adventurer-Packing-Game/)
 
 # How To build
 - After build, the game uses PlayerPrefs for saving (WebGL compatible)
