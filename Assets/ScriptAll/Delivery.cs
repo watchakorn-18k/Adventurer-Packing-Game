@@ -158,32 +158,9 @@ public class Delivery : MonoBehaviour
             rangeLine.material.mainTextureScale = new Vector2(dist, 1f); 
         }
 
-        // Check Target for Color Change
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-        bool aimingAtCustomer = false;
-        
-        if (hit.collider != null)
-        {
-            if (hit.collider.CompareTag("customerBlue") || hit.collider.CompareTag("customerBlack"))
-            {
-                // Check distance again just to be sure valid delivery logic holds
-                if (Vector2.Distance(startPos, hit.collider.transform.position) <= 12f)
-                {
-                    aimingAtCustomer = true;
-                }
-            }
-        }
-
-        if (aimingAtCustomer)
-        {
-            rangeLine.startColor = Color.green;
-            rangeLine.endColor = Color.green;
-        }
-        else
-        {
-            rangeLine.startColor = Color.white;
-            rangeLine.endColor = new Color(1, 1, 1, 0.5f);
-        }
+        // [Modified] ไม่เปลี่ยนสีแล้ว ให้เป็นสีขาวตลอด (ผู้เล่นต้องกะเอง)
+        rangeLine.startColor = Color.white;
+        rangeLine.endColor = new Color(1, 1, 1, 0.5f);
     }
 
     // [New] ฟังก์ชันเช็คการคลิกเมาส์เพื่อโยนของ
@@ -193,19 +170,70 @@ public class Delivery : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-            
-            // ยิง Raycast ไปที่ตำแหน่งเมาส์
-            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-            if (hit.collider != null)
+            Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
+
+            float dist = Vector2.Distance(playerPos, mousePos2D);
+
+            // [Modified] โยนได้ทุกระยะ แต่ถ้าเกิน 12 เมตร จะ Clamp ตำแหน่งเป้าหมายให้อยู่แค่ 12 เมตร
+            Vector3 targetThrowPos = mousePos;
+            if (dist > 12f)
             {
-                // เช็คระยะห่าง (เพิ่มระยะเป็น 12 เมตร)
-                float dist = Vector2.Distance(transform.position, hit.collider.transform.position);
-                if (dist <= 12f)
+                Vector2 dir = (mousePos2D - playerPos).normalized;
+                Vector2 clampedPos = playerPos + (dir * 12f);
+                mousePos2D = clampedPos;
+                targetThrowPos = new Vector3(clampedPos.x, clampedPos.y, mousePos.z);
+            }
+
+            bool isHit = false;
+            
+            // [Modified] ใช้ OverlapCircle แทน Raycast จุดเดียว เพื่อให้เล็งง่ายขึ้น (รัศมี 1 เมตร)
+            // ถ้าคลิกแถวๆ ลูกค้าในระยะ ก็ให้ถือว่าโดน (Forgiving Aim)
+            Collider2D hitCol = Physics2D.OverlapCircle(mousePos2D, 1.0f);
+            
+            if (hitCol != null)
+            {
+                if (hitCol.CompareTag("customerBlue") && AmoutOfPlaceBlue < MaxPackageBlue)
                 {
-                    TryDeliver(hit.collider.gameObject);
+                    TryDeliver(hitCol.gameObject);
+                    isHit = true;
+                }
+                else if (hitCol.CompareTag("customerBlack") && AmoutOfPlaceBlack < MaxPackageBlack)
+                {
+                    TryDeliver(hitCol.gameObject);
+                    isHit = true;
                 }
             }
+
+            // ถ้าเล็งไม่โดนลูกค้า หรือลูกค้าเต็ม -> ปาพลาด (เสียหาย)
+            if (!isHit)
+            {
+                ProcessMiss(targetThrowPos);
+            }
         }
+    }
+
+    void ProcessMiss(Vector3 targetPos)
+    {
+        hasPackage = false;
+        AmoutOfPackageInPlayer -= 1;
+
+        // Visual Package Throw
+        if (Cargo != null) 
+        {
+             PackageOnCar = GameObject.Find($"{Cargo.name}");
+             if (PackageOnCar != null)
+             {
+                 StartCoroutine(AnimateThrow(PackageOnCar, targetPos));
+             }
+        }
+
+        // Score Penalty (-1)
+        AmoutOfPackage -= 1; 
+        SaveScoreTotxt();
+        ScorePackage.text = AmoutOfPackage.ToString();
+        
+        // Show Text
+        ShowFloatingText(targetPos, "-1 Miss!", Color.red);
     }
 
     void OnCollisionEnter2D(Collision2D other)
