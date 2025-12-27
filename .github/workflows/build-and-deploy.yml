@@ -2,14 +2,14 @@ name: Deploy WebGL to GitHub Pages
 
 on:
   push:
-    branches: [master]
-    paths:
-      - 'build-game/**'  # Only trigger when build folder changes
+    branches:
+      - master
+  workflow_dispatch:  # Allow manual trigger from GitHub Actions UI
 
 jobs:
   deploy:
     name: Deploy to GitHub Pages
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latestm
     
     permissions:
       pages: write
