@@ -131,21 +131,32 @@ public class Delivery : MonoBehaviour
         rangeLine.gameObject.SetActive(true);
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0; // Ensure 2D
+        mousePos.z = -5f; // [Fix] ดึงเส้นมาอยู่ข้างหน้าสุด
         
         Vector3 startPos = transform.position;
+        startPos.z = -5f; // [Fix] ดึงจุดเริ่มมาข้างหน้าด้วย
+
+        rangeLine.SetPosition(0, startPos);
+        rangeLine.SetPosition(1, mousePos);
+
         Vector3 dir = (mousePos - startPos).normalized;
-        float dist = Vector3.Distance(startPos, mousePos);
+        float dist = Vector3.Distance(new Vector2(startPos.x, startPos.y), new Vector2(mousePos.x, mousePos.y));
 
         // Limit distance to 12m
         if (dist > 12f)
         {
             dist = 12f;
             mousePos = startPos + (dir * dist);
+            // Re-apply Z
+            mousePos.z = -5f; 
+            rangeLine.SetPosition(1, mousePos);
         }
 
-        rangeLine.SetPosition(0, startPos);
-        rangeLine.SetPosition(1, mousePos);
+        // Adjust Tiling based on distance (ให้เส้นประความถี่เท่าเดิมตลอด)
+        if (rangeLine.material != null)
+        {
+            rangeLine.material.mainTextureScale = new Vector2(dist, 1f); 
+        }
 
         // Check Target for Color Change
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -660,15 +671,17 @@ public class Delivery : MonoBehaviour
         rangeObj.transform.localPosition = Vector3.zero;
 
         rangeLine = rangeObj.AddComponent<LineRenderer>();
-        rangeLine.useWorldSpace = false;
-        rangeLine.loop = true;
-        rangeLine.positionCount = 50;
-        rangeLine.startWidth = 0.05f;
-        rangeLine.endWidth = 0.05f;
+        rangeLine.useWorldSpace = true; // [Fix] ต้องใช้ World Space เพราะเราคำนวณตำแหน่งแบบ World
+        rangeLine.sortingOrder = 50;    // [Fix] ให้แสดงผลทับทุกอย่าง
+        rangeLine.loop = false;
+        rangeLine.positionCount = 2;
+        rangeLine.startWidth = 0.2f; // [Fix] เพิ่มความหนา
+        rangeLine.endWidth = 0.2f;
         
         // Procedural Dashed Texture (32px: 16 white, 16 clear)
         Texture2D tex = new Texture2D(32, 1);
         tex.filterMode = FilterMode.Point;
+        tex.wrapMode = TextureWrapMode.Repeat;
         for (int i = 0; i < 32; i++) 
         {
              if (i < 16) tex.SetPixel(i, 0, Color.white);
@@ -683,10 +696,10 @@ public class Delivery : MonoBehaviour
         
         // Tile texture to create dashes
         rangeLine.textureMode = LineTextureMode.Tile; 
-        rangeLine.material.mainTextureScale = new Vector2(5f, 1f); // Adjust tiling
+        rangeLine.material.mainTextureScale = new Vector2(1f, 1f);
         
-        rangeLine.startColor = new Color(1, 1, 1, 0.5f);
-        rangeLine.endColor = new Color(1, 1, 1, 0.5f);
+        rangeLine.startColor = Color.white;
+        rangeLine.endColor = Color.white;
 
         // Configure as simple line (Start -> End)
         rangeLine.positionCount = 2;
