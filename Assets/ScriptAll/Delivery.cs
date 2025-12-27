@@ -424,19 +424,18 @@ public class Delivery : MonoBehaviour
 
     void SaveScoreTotxt()
     {
-        string pathScore = Application.dataPath + "/Resources/SaveScore.txt";
-        string pathName = Application.dataPath + "/Resources/SaveName.txt";
-        File.AppendAllText(pathName, PlayerPrefs.GetString("SaveName") + "\n");
-
-        File.AppendAllText(pathScore, $"{int.Parse(checkScore()) + 1}" + "\n");
+        // [WebGL Fix] ใช้ PlayerPrefs แทน File I/O
+        int currentScore = PlayerPrefs.GetInt("CurrentScore", 0);
+        currentScore++;
+        PlayerPrefs.SetInt("CurrentScore", currentScore);
+        PlayerPrefs.Save(); // บังคับ Save ทันที (สำคัญสำหรับ WebGL)
     }
 
     string checkScore()
     {
-        string path = Application.dataPath + "/Resources/SaveScore.txt";
-        string[] lines = System.IO.File.ReadAllLines(path);
-        string ScoreTxt = lines[lines.Length - 1];
-        return ScoreTxt;
+        // [WebGL Fix] อ่านจาก PlayerPrefs แทน File
+        int score = PlayerPrefs.GetInt("CurrentScore", 0);
+        return score.ToString();
     }
 
     void CheckNewHightScore()
