@@ -46,6 +46,9 @@ public class Delivery : MonoBehaviour
     List<GameObject> blueCustomers = new List<GameObject>();
     List<GameObject> blackCustomers = new List<GameObject>();
 
+    // [New] Stack counters for each customer (key = customer instance ID)
+    Dictionary<int, int> customerStackCount = new Dictionary<int, int>();
+
 
 
 
@@ -229,7 +232,7 @@ public class Delivery : MonoBehaviour
 
              if (pkgThrow != null)
              {
-                 StartCoroutine(AnimateThrowMiss(pkgThrow, targetPos));
+                 StartCoroutine(AnimateThrowMissNew(pkgThrow, targetPos));
              }
         }
 
@@ -241,7 +244,7 @@ public class Delivery : MonoBehaviour
         ScorePackage.text = AmoutOfPackage.ToString();
         
         // Show Text
-        ShowFloatingText(targetPos, "-1 Miss!", Color.red);
+        // ShowFloatingText(targetPos, "-1 Miss!", Color.red); // Moved to Animation
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -306,7 +309,8 @@ public class Delivery : MonoBehaviour
              // แต่ code เดิมใช้ GameObject.Find(Cargo.name) ซึ่งเสี่ยงถ้า name ซ้ำ แต่เราจะคง Logic เดิมไว้
              if (PackageOnCar != null)
              {
-                 StartCoroutine(AnimateThrow(PackageOnCar, CustomerPlace.transform.position));
+                 // [Modified] ใช้ AnimateThrowToStack แทน เพื่อวางกล่องซ้อนกัน
+                 StartCoroutine(AnimateThrowToStack(PackageOnCar, CustomerPlace));
              }
         }
         
@@ -799,9 +803,6 @@ public class Delivery : MonoBehaviour
         // สุ่มทิศทางกลิ้งเล็กน้อย
         Vector3 rollDir = (targetPos - startPos).normalized; 
 
-        // เก็บขนาดตอนตกถึงพื้น (เผื่อมีการ Scale)
-        Vector3 groundScale = pkg.transform.localScale;
-
         while (rollElapsed < rollDuration)
         {
             if (pkg == null) yield break;
@@ -824,9 +825,6 @@ public class Delivery : MonoBehaviour
                 Color c = sr.color;
                 c.a = Mathf.Lerp(1f, 0f, fadeT); 
                 sr.color = c;
-                
-                // ย่อขนาดลงด้วยนิดหน่อยตอนจะหายเพื่อความสมูท
-                pkg.transform.localScale = Vector3.Lerp(groundScale, Vector3.zero, fadeT);
             }
 
             yield return null;
@@ -835,4 +833,162 @@ public class Delivery : MonoBehaviour
         Destroy(pkg);
     }
 
+    IEnumerator AnimateThrowMissNew(GameObject pkg, Vector3 targetPos)
+    {
+        if (pkg == null) yield break;
+
+        // 1. Setup: Detach and Cleanup
+        pkg.transform.SetParent(null);
+        foreach (var c in pkg.GetComponents<MonoBehaviour>()) { Destroy(c); }
+        
+        Collider2D col = pkg.GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+        
+        Rigidbody2D rb = pkg.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.simulated = false;
+
+        SpriteRenderer sr = pkg.GetComponent<SpriteRenderer>();
+        if (sr == null) sr = pkg.GetComponentInChildren<SpriteRenderer>();
+        if (sr != null) sr.sortingOrder = 100;
+
+        // 2. Fly Phase (Parabola)
+        Vector3 startPos = pkg.transform.position;
+        targetPos.z = startPos.z; // Fix Z
+        float duration = 0.5f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            if (pkg == null) yield break;
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
+            currentPos.y += 4 * 2.0f * t * (1 - t); // Arc
+            currentPos.z = startPos.z;
+            pkg.transform.position = currentPos;
+
+            pkg.transform.Rotate(0, 0, 360 * Time.deltaTime * 3);
+            yield return null;
+        }
+
+        // 3. Roll Phase (Decelerate to Stop)
+        pkg.transform.position = targetPos;
+        float rollDuration = 1.0f; // Roll for 1s
+        float rollElapsed = 0f;
+        Vector3 rollDir = (targetPos - startPos).normalized;
+        float initialSpeed = 2.0f;
+
+        while (rollElapsed < rollDuration)
+        {
+            if (pkg == null) yield break;
+            rollElapsed += Time.deltaTime;
+            float t = rollElapsed / rollDuration;
+
+            // Speed from 2.0 -> 0.0
+            float currentSpeed = initialSpeed * (1f - t); 
+            
+            Vector3 nextPos = pkg.transform.position + (rollDir * currentSpeed * Time.deltaTime);
+            nextPos.z = startPos.z;
+            pkg.transform.position = nextPos;
+
+            pkg.transform.Rotate(0, 0, -360 * currentSpeed * 0.5f * Time.deltaTime);
+            yield return null;
+        }
+
+        // 4. Fade Phase (Static)
+        // [New] Show Penalty Text when stopped
+        ShowFloatingText(targetPos, "-1", Color.red);
+
+        float fadeDuration = 0.5f;
+        float fadeElapsed = 0f;
+
+        if (sr != null)
+        {
+            Color startColor = sr.color;
+            while (fadeElapsed < fadeDuration)
+            {
+                if (pkg == null) yield break;
+                fadeElapsed += Time.deltaTime;
+                float t = fadeElapsed / fadeDuration;
+
+                Color c = startColor;
+                c.a = Mathf.Lerp(1f, 0f, t);
+                sr.color = c;
+                yield return null;
+            }
+        }
+
+        Destroy(pkg);
+    }
+
+    // [New] Animation for successful delivery - Stacks boxes next to customer
+    IEnumerator AnimateThrowToStack(GameObject pkg, GameObject customer)
+    {
+        if (pkg == null || customer == null) yield break;
+
+        // แยกกล่องออกจากตัวรถ
+        pkg.transform.SetParent(null);
+        
+        // ปิด Script/Collider ที่อาจจะรบกวน
+        foreach (var c in pkg.GetComponents<MonoBehaviour>()) { Destroy(c); }
+        Collider2D col = pkg.GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+        Rigidbody2D rb = pkg.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.simulated = false;
+
+        // คำนวณตำแหน่งวางกล่อง (ข้างๆ ลูกค้า + ซ้อนกันตามจำนวน)
+        int customerId = customer.GetInstanceID();
+        if (!customerStackCount.ContainsKey(customerId))
+        {
+            customerStackCount[customerId] = 0;
+        }
+        int stackIndex = customerStackCount[customerId];
+        customerStackCount[customerId]++;
+
+        // ตำแหน่งฐาน: ขยับไปทางขวาของลูกค้า 1.5 หน่วย
+        // ตำแหน่งสูง: แต่ละกล่องสูงขึ้น 0.5 หน่วย
+        float boxHeight = 0.5f;
+        float offsetX = 1.5f;
+        Vector3 stackPos = customer.transform.position + new Vector3(offsetX, stackIndex * boxHeight, 0);
+        stackPos.z = pkg.transform.position.z; // คงค่า Z
+
+        Vector3 startPos = pkg.transform.position;
+        float duration = 0.4f;
+        float elapsed = 0f;
+
+        // 1. Fly Phase (Parabola)
+        while (elapsed < duration)
+        {
+            if (pkg == null) yield break;
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            Vector3 currentPos = Vector3.Lerp(startPos, stackPos, t);
+            float arcHeight = 1.5f;
+            currentPos.y += 4 * arcHeight * t * (1 - t);
+            currentPos.z = startPos.z;
+            pkg.transform.position = currentPos;
+
+            pkg.transform.Rotate(0, 0, 360 * Time.deltaTime * 2);
+            yield return null;
+        }
+
+        // 2. วางลงพื้น (ปรับขนาดกลับเป็นปกติ และหยุดนิ่ง)
+        pkg.transform.position = stackPos;
+        pkg.transform.rotation = Quaternion.identity; // หยุดหมุน ตั้งตรง
+        pkg.transform.localScale = Vector3.one * 0.8f; // ย่อนิดหน่อยให้ดูเป็นระเบียบ
+
+        // [Optional] Force Sorting Order ให้กล่องที่สูงกว่าอยู่หน้า
+        SpriteRenderer sr = pkg.GetComponent<SpriteRenderer>();
+        if (sr == null) sr = pkg.GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.sortingOrder = 10 + stackIndex; // กล่องที่สูงกว่าจะอยู่หน้า
+        }
+
+        // [Fix] ตั้ง PackageOnCar = null เพื่อให้ระบบนับคะแนนทำงาน
+        // (เพราะ Update() เช็คว่า PackageOnCar == null ถึงจะนับ)
+        PackageOnCar = null;
+    }
 }
